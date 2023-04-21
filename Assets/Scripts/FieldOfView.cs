@@ -8,10 +8,12 @@ public class FieldOfView : MonoBehaviour
     public float radius;
     [Range(0, 360)]
     public float angle;
+    public float attackRange;
     public GameObject playerRef;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public bool canSeePlayer;
+    public bool canAttackPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,22 +46,25 @@ public class FieldOfView : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
+                if(distanceToTarget < attackRange)
+                    canAttackPlayer = true;
+                else
+                    canAttackPlayer = false;
+
                 if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
                 
             }
-            else
+            else{
                 canSeePlayer = false;
+                canAttackPlayer = false;
+            }
         }
-        else if(canSeePlayer)
+        else if(canSeePlayer){
             canSeePlayer = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+            canAttackPlayer = false;
+        }
     }
 }

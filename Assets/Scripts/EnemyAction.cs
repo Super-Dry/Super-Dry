@@ -12,6 +12,9 @@ public class EnemyAction : MonoBehaviour
     public float walkPointRange;
     public float pauseTime;
     private float lastActionDuration;
+    public float timeBetweenAttacks;
+    private bool alreadyAttacked;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -22,11 +25,15 @@ public class EnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(fov.canSeePlayer)
+        if(fov.canSeePlayer && !fov.canAttackPlayer)
         {
             ChasePlayer();
         }
-        else if(Time.time > lastActionDuration + pauseTime)
+        else if(fov.canSeePlayer && fov.canAttackPlayer)
+        {
+            AttackPlayer();
+        }
+        else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
         {
             Patroling();
         }
@@ -65,5 +72,26 @@ public class EnemyAction : MonoBehaviour
     {
         agent.SetDestination(player.position);
         lastActionDuration = Time.time;
+    }
+
+    private void AttackPlayer()
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
+        {
+            ///Attack code here
+            print("attack!");
+            ///End of attack code
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
     }
 }
