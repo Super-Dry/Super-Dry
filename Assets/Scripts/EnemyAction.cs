@@ -6,10 +6,12 @@ public class EnemyAction : MonoBehaviour
     public FieldOfView fov;
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatIsGround;
+    public LayerMask Ground;
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float pauseTime;
+    private float lastActionDuration;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -20,8 +22,15 @@ public class EnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!fov.canSeePlayer) Patroling();
-        else ChasePlayer();
+        if(fov.canSeePlayer)
+        {
+            ChasePlayer();
+        }
+        else if(Time.time > lastActionDuration + pauseTime)
+        {
+            Patroling();
+        }
+        else return;
     }
 
     private void Patroling()
@@ -36,6 +45,8 @@ public class EnemyAction : MonoBehaviour
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+
+        lastActionDuration = Time.time;
     }
 
     private void SearchWalkPoint()
@@ -46,12 +57,13 @@ public class EnemyAction : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, Ground))
             walkPointSet = true;
     }
 
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        lastActionDuration = Time.time;
     }
 }
