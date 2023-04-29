@@ -49,6 +49,12 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+//            animator.SetBool("isShooting", true);
+        }else{
+//            animator.SetBool("isShooting", false);
+        }
+
+        if(Input.GetButton("Fire1")){
             animator.SetBool("isShooting", true);
         }else{
             animator.SetBool("isShooting", false);
