@@ -7,6 +7,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public CharacterController controller;
     public Transform cam;
+    public Animator animator;
 
     public float speed = 5f;
     public float rotationSmoothTime = 0.1f;
@@ -42,13 +43,19 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
         }
+                
+        transform.rotation = cam.transform.rotation;
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            animator.SetBool("isShooting", true);
+        }else{
+            animator.SetBool("isShooting", false);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+        animator.SetBool("isWalking", Input.GetAxisRaw("Vertical") != 0);
     }
 }
