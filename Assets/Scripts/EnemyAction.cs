@@ -91,6 +91,7 @@ public class EnemyAction : MonoBehaviour
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             Destroy(rb.gameObject, 1.5f);
+            print("attack!");
             ///End of attack code
 
             alreadyAttacked = true;
