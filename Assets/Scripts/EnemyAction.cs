@@ -14,6 +14,7 @@ public class EnemyAction : MonoBehaviour
     private float lastActionDuration;
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
+    public GameObject bullet;
 
     void Awake()
     {
@@ -82,6 +83,14 @@ public class EnemyAction : MonoBehaviour
         if (!alreadyAttacked)
         {
             ///Attack code here
+            // GameObject bulletObj = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
+            // Rigidbody bulletRig = bulletObj.GetComponent<Rigidbody>();
+            // bulletRig.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            // bulletRig.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Destroy(rb.gameObject, 1.5f);
             print("attack!");
             ///End of attack code
 
