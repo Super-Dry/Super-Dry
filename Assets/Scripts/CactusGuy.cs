@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CactusGuy : MonoBehaviour
 {
@@ -21,12 +22,19 @@ public class CactusGuy : MonoBehaviour
         _currentHealth -= Random.Range(0.5f, 1.5f);
 
         if(_currentHealth <= 0) {
-            Instantiate(_deathEffect, transform.position, Quaternion.Euler(-90,0,0));
+            //Instantiate(_deathEffect, transform.position, Quaternion.Euler(-90,0,0));
             Destroy(gameObject);
+            RestartScene();
         }
         else{
             _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
             Instantiate(_hitEffect, transform.position, Quaternion.identity);
         }
     }
+
+    public void RestartScene()
+     {
+         Scene thisScene = SceneManager.GetActiveScene();
+         SceneManager.LoadScene(thisScene.name);
+     }
 }
