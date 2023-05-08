@@ -42,6 +42,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+            animator.SetBool("isWalking", true);
+        }else{
+            animator.SetBool("isWalking", false);
         }
                 
         transform.rotation = cam.transform.rotation;
@@ -62,6 +65,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-        animator.SetBool("isWalking", Input.GetAxisRaw("Vertical") != 0);
+        // animator.SetBool("isWalking", Input.GetAxisRaw("Vertical") != 0);
     }
 }
