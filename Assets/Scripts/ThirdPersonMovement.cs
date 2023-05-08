@@ -7,6 +7,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public CharacterController controller;
     public Transform cam;
+    public Animator animator;
 
     public float speed = 5f;
     public float rotationSmoothTime = 0.1f;
@@ -14,7 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float jumpHeight = 1.0f;
-    private float gravityValue = -15.81f;
+    private float gravityValue = -9.81f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,19 +42,29 @@ public class ThirdPersonMovement : MonoBehaviour
 
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+            animator.SetBool("isWalking", true);
+        }else{
+            animator.SetBool("isWalking", false);
         }
-        var CharacterRotation = cam.transform.rotation;
-        CharacterRotation.x = 0;
-        CharacterRotation.z = 0;
-         
-        transform.rotation = CharacterRotation;
+                
+        transform.rotation = cam.transform.rotation;
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+//            animator.SetBool("isShooting", true);
+        }else{
+//            animator.SetBool("isShooting", false);
         }
-        
+
+        if(Input.GetButton("Fire1")){
+            animator.SetBool("isShooting", true);
+        }else{
+            animator.SetBool("isShooting", false);
+        }
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+        // animator.SetBool("isWalking", Input.GetAxisRaw("Vertical") != 0);
     }
 }
