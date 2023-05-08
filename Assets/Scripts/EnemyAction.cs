@@ -1,20 +1,32 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyAction : MonoBehaviour
 {
     public FieldOfView fov;
     public NavMeshAgent agent;
     public Transform player;
+    public Transform playerTargerPoint;
     public LayerMask Ground;
+
+    //Look Around
+    public float lookAroundAngle;
+    public float pauseTime;
+    private float lastActionDuration;
+    private bool looked = false;
+
+    //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
-    public float pauseTime;
-    private float lastActionDuration;
+    
+    //Attacking
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
     public GameObject bullet;
+    public Transform shootPoint;
+    public float bulletSpeed;
 
     void Awake()
     {
@@ -36,10 +48,11 @@ public class EnemyAction : MonoBehaviour
         }
         else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
         {
-            Patroling();
+            Patroling();            
         }
         else return;
     }
+
 
     private void Patroling()
     {
@@ -69,6 +82,7 @@ public class EnemyAction : MonoBehaviour
             walkPointSet = true;
     }
 
+
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
@@ -78,19 +92,16 @@ public class EnemyAction : MonoBehaviour
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
-        transform.LookAt(player);
+        transform.LookAt(playerTargerPoint);
 
         if (!alreadyAttacked)
         {
-            ///Attack code here
-            // GameObject bulletObj = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
-            // Rigidbody bulletRig = bulletObj.GetComponent<Rigidbody>();
-            // bulletRig.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            // bulletRig.AddForce(transform.up * 8f, ForceMode.Impulse);
-            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            Destroy(rb.gameObject, 1.5f);
+            // Attack code here
+            GameObject bulletObj = Instantiate(bullet, shootPoint.position, Quaternion.identity);
+            Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
+            bulletObj.transform.forward = shootingDirection.normalized;
+            bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
+            Destroy(bulletObj, 3f);
             print("attack!");
             ///End of attack code
 
