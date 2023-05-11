@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.collider.name == "CactusGuy")
         {
             Destroy(gameObject);
             print("Player got hit by enemy");

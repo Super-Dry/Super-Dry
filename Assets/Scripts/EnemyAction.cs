@@ -14,7 +14,6 @@ public class EnemyAction : MonoBehaviour
     public float lookAroundAngle;
     public float pauseTime;
     private float lastActionDuration;
-    private bool looked = false;
 
     //Patroling
     public Vector3 walkPoint;
