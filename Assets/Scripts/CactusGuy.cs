@@ -5,36 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class CactusGuy : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth = 3;
-    [SerializeField] private GameObject _deathEffect, _hitEffect;
-    private float _currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
 
-    [SerializeField] private Healthbar _healthbar;
-    // Start is called before the first frame update
+    public Healthbar healthbar;
+
     void Start()
     {
-        _currentHealth = _maxHealth;
-
-        _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
+        currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
     }
 
-    void OnMouseEnter() {
-        _currentHealth -= Random.Range(0.5f, 1.5f);
-
-        if(_currentHealth <= 0) {
-            //Instantiate(_deathEffect, transform.position, Quaternion.Euler(-90,0,0));
-            Destroy(gameObject);
-            RestartScene();
-        }
-        else{
-            _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
-            Instantiate(_hitEffect, transform.position, Quaternion.identity);
-        }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
     }
-
-    public void RestartScene()
-     {
-         Scene thisScene = SceneManager.GetActiveScene();
-         SceneManager.LoadScene(thisScene.name);
-     }
 }
