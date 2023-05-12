@@ -42,4 +42,22 @@ public class BrightnessMatch : MonoBehaviour
             }
         }
     }
+
+    public void SetBrightness(float value)
+    {
+        if(value != default(float))
+        {
+            BrightnessControl.brightnessValue = value;
+            if(value > 0.05f)
+            {
+                BrightnessControl.exposure.keyValue.value = value;
+                BrightnessControl.brightnessValue = value;
+            }
+            else
+            {
+                BrightnessControl.exposure.keyValue.value = 0.05f;
+                BrightnessControl.brightnessValue = 0.05f;
+            }
+        }
+    }
 }
