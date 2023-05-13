@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
-{
-    public CactusGuy player;
-    
+{  
     void OnCollisionStay(Collision collision)
     {
-        if(collision.collider.name == "CactusGuy")
+        CactusGuy player = collision.gameObject.GetComponent<CactusGuy>();
+        if(player != null)
         {
             Destroy(gameObject);
             print("Player got hit by enemy");
