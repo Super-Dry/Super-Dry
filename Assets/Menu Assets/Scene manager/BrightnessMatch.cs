@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 using static BrightnessControl;
 public class BrightnessMatch : MonoBehaviour
 {
+    public  Slider BrightnessSlider; 
     public  PostProcessProfile brightness;
     public  PostProcessLayer layer;
     public AutoExposure exposure;
@@ -35,17 +37,19 @@ public class BrightnessMatch : MonoBehaviour
             if(BrightnessControl.brightnessValue != 0)
             {
                 exposure.keyValue.value = BrightnessControl.brightnessValue;
+                BrightnessSlider.value = BrightnessControl.brightnessValue;
             }
             else
             {
                 exposure.keyValue.value = 0.05f;
+                BrightnessSlider.value = 0.05f;
             }
         }
     }
 
     public void SetBrightness(float value)
     {
-        if(value != default(float))
+        if(value != default(float) && pauseGame.isPaused)
         {
             BrightnessControl.brightnessValue = value;
             if(value > 0.05f)

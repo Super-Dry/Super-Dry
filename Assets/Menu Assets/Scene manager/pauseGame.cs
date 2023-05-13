@@ -47,7 +47,7 @@ public class pauseGame : MonoBehaviour
 
         Time.timeScale = 1f; // Unpause the game
         Cursor.lockState = CursorLockMode.Locked; //Lock the cursor back for the game
-        Cursor.visible = true; // hide the cursor
+        Cursor.visible = false; // hide the cursor
         //Canvas canvas = canvasObject.GetComponent<Canvas>(); // get the canvas component
         myCanvas = GetComponent<Canvas>();
         // Check if the Canvas component was found
