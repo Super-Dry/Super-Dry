@@ -5,22 +5,35 @@ using UnityEngine.UI;
 
 public class Healthbar : MonoBehaviour
 {
-    [SerializeField] private Image _healthbarSprite;
-    [SerializeField] private float _reduceSpeed = 2;
-    private float _target = 1;
+    public Slider slider;
 
-    private Camera _cam;
-
-    void Start(){
-        _cam = Camera.main;
+    public void SetMaxHealth(int health)
+    {
+        slider.maxValue = health;
+        slider.value = health;
     }
 
-    public void UpdateHealthBar(float maxHealth, float currentHealth){
-        _target = currentHealth / maxHealth;
+    public void SetHealth(int health)
+    {
+        slider.value = health;
     }
 
-    void Update(){
-        transform.rotation = Quaternion.LookRotation(transform.position - _cam.transform.position);
-        _healthbarSprite.fillAmount = Mathf.MoveTowards(_healthbarSprite.fillAmount, _target, _reduceSpeed * Time.deltaTime);
-    }
+    // [SerializeField] private Image _healthbarSprite;
+    // [SerializeField] private float _reduceSpeed = 2;
+    // private float _target = 1;
+
+    // private Camera _cam;
+
+    // void Start(){
+    //     _cam = Camera.main;
+    // }
+
+    // public void UpdateHealthBar(float maxHealth, float currentHealth){
+    //     _target = currentHealth / maxHealth;
+    // }
+
+    // void Update(){
+    //     transform.rotation = Quaternion.LookRotation(transform.position - _cam.transform.position);
+    //     _healthbarSprite.fillAmount = Mathf.MoveTowards(_healthbarSprite.fillAmount, _target, _reduceSpeed * Time.deltaTime);
+    // }
 }

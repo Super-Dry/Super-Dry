@@ -14,7 +14,6 @@ public class EnemyAction : MonoBehaviour
     public float lookAroundAngle;
     public float pauseTime;
     private float lastActionDuration;
-    private bool looked = false;
 
     //Patroling
     public Vector3 walkPoint;
@@ -28,16 +27,28 @@ public class EnemyAction : MonoBehaviour
     public Transform shootPoint;
     public float bulletSpeed;
 
+    //Health
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Healthbar healthbar;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         fov = GetComponent<FieldOfView>();
         agent = GetComponent<NavMeshAgent>();
+        currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(10);
+        }
         if(fov.canSeePlayer && !fov.canAttackPlayer)
         {
             ChasePlayer();
@@ -113,5 +124,11 @@ public class EnemyAction : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
     }
 }
