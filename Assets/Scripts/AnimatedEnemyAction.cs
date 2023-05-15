@@ -6,7 +6,9 @@ public class AnimatedEnemyAction : MonoBehaviour
 {
     public FieldOfView fov;
     public NavMeshAgent agent;
-    public Transform player;
+    public Transform playerTrans;
+    public GameObject playerRef;
+    CactusGuy cactusGuy;
     public Transform playerTargerPoint;
     public LayerMask Ground;
 
@@ -24,6 +26,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     public Vector3 temp;
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
+    public int damage;
     //public GameObject bullet;
     //public Transform shootPoint;
     //public float bulletSpeed;
@@ -31,6 +34,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     //Health
     public int maxHealth = 100;
     public int currentHealth;
+    bool isDead = false;
 
     public Healthbar healthbar;
 
@@ -39,7 +43,9 @@ public class AnimatedEnemyAction : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+        cactusGuy = playerRef.GetComponent<CactusGuy>();
         fov = GetComponent<FieldOfView>();
         agent = GetComponentInChildren<NavMeshAgent>(); //maybe get rid of in children
         anim = GetComponent<Animator>();
@@ -50,25 +56,37 @@ public class AnimatedEnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(fov.canSeePlayer && !fov.canAttackPlayer)
+        if(!isDead)
         {
-            ChasePlayer();
+            if(fov.canSeePlayer && !fov.canAttackPlayer)
+            {
+                ChasePlayer();
+            }
+            else if(fov.canSeePlayer && fov.canAttackPlayer)
+            {
+                AttackPlayer();
+            }
+            else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
+            {
+                Patroling();            
+            }
+            else{ 
+                anim.SetBool("isWalk", false);
+                anim.SetBool("isAttack", false);
+                anim.SetBool("isIdle", true);
+                anim.SetBool("isDead", false);
+                anim.SetBool("isHit", false);
+                return;
+            }
         }
-        else if(fov.canSeePlayer && fov.canAttackPlayer)
-        {
-            AttackPlayer();
-        }
-        else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
-        {
-            Patroling();            
-        }
-        else{ 
+        else
+        {   // Enemy is dead
             anim.SetBool("isWalk", false);
             anim.SetBool("isAttack", false);
-            anim.SetBool("isIdle", true);
-            anim.SetBool("isDead", false);
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isDead", true);
             anim.SetBool("isHit", false);
-            return;
+            Invoke(nameof(DestroyEnemy), 1f);
         }
     }
 
@@ -115,7 +133,7 @@ public class AnimatedEnemyAction : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(playerTrans.position);
         lastActionDuration = Time.time;
         anim.SetBool("isWalk", true);
         anim.SetBool("isAttack", false);
@@ -137,8 +155,9 @@ public class AnimatedEnemyAction : MonoBehaviour
             //Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
             //bulletObj.transform.forward = shootingDirection.normalized;
             //bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
-            //Destroy(bulletObj, 3f);
+            // Destroy(bulletObj, 5f);
             // print("attack!");
+            cactusGuy.TakeDamage(damage);
             ///End of attack code
 
             alreadyAttacked = true;
@@ -160,5 +179,14 @@ public class AnimatedEnemyAction : MonoBehaviour
     {
         currentHealth -= damage;
         healthbar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+           isDead = true; 
+        }
+    }
+
+    private void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }

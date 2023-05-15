@@ -98,7 +98,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
         bulletsShot++;
 
-        // Destroy(currentBullet, 3f);
+        Destroy(currentBullet, 5f);
         
         if (allowInvoke)
         {
