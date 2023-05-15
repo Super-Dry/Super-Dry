@@ -37,17 +37,6 @@ public class CactusGuy : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            HealHealth(10);
-        }
-        if(Input.GetKeyDown(KeyCode.LeftControl)){
-            HealShield(10);
-        }
-    }
-
     public void HealShield(int heal)
     {
         currentShield = Mathf.Min(currentShield + heal, maxShield);

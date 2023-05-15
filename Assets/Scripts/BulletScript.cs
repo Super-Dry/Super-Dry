@@ -10,7 +10,7 @@ public class BulletScript : MonoBehaviour
         if(player != null)
         {
             Destroy(gameObject);
-            print("Player got hit by enemy");
+            // print("Player got hit by enemy");
             player.TakeDamage(10);
         }
     }

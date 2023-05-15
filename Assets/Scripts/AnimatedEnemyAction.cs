@@ -28,6 +28,11 @@ public class AnimatedEnemyAction : MonoBehaviour
     //public Transform shootPoint;
     //public float bulletSpeed;
 
+    //Health
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Healthbar healthbar;
 
     //Animator
     Animator anim;
@@ -38,6 +43,8 @@ public class AnimatedEnemyAction : MonoBehaviour
         fov = GetComponent<FieldOfView>();
         agent = GetComponentInChildren<NavMeshAgent>(); //maybe get rid of in children
         anim = GetComponent<Animator>();
+        currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -131,7 +138,7 @@ public class AnimatedEnemyAction : MonoBehaviour
             //bulletObj.transform.forward = shootingDirection.normalized;
             //bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
             //Destroy(bulletObj, 3f);
-            print("attack!");
+            // print("attack!");
             ///End of attack code
 
             alreadyAttacked = true;
@@ -147,5 +154,11 @@ public class AnimatedEnemyAction : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
     }
 }

@@ -112,8 +112,7 @@ public class EnemyAction : MonoBehaviour
             Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
             bulletObj.transform.forward = shootingDirection.normalized;
             bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
-            Destroy(bulletObj, 3f);
-            print("attack!");
+            // Destroy(bulletObj, 3f);
             ///End of attack code
 
             alreadyAttacked = true;
