@@ -12,9 +12,8 @@ public class FieldOfView : MonoBehaviour
     public GameObject playerRef;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
-    [NonSerialized]public bool canSeePlayer;
-    [NonSerialized]public bool canAttackPlayer;
-    
+    public bool canSeePlayer;
+    public bool canAttackPlayer;
     // Start is called before the first frame update
     void Start()
     {
