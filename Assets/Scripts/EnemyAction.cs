@@ -6,7 +6,7 @@ public class EnemyAction : MonoBehaviour
 {
     public FieldOfView fov;
     public NavMeshAgent agent;
-    public Transform playerTrans;
+    public Transform player;
     public Transform playerTargerPoint;
     public LayerMask Ground;
 
@@ -14,6 +14,7 @@ public class EnemyAction : MonoBehaviour
     public float lookAroundAngle;
     public float pauseTime;
     private float lastActionDuration;
+    private bool looked = false;
 
     //Patroling
     public Vector3 walkPoint;
@@ -26,21 +27,12 @@ public class EnemyAction : MonoBehaviour
     public GameObject bullet;
     public Transform shootPoint;
     public float bulletSpeed;
-    public int damage;
-
-    //Health
-    public int maxHealth = 100;
-    public int currentHealth;
-
-    public Healthbar healthbar;
 
     void Awake()
     {
-        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         fov = GetComponent<FieldOfView>();
         agent = GetComponent<NavMeshAgent>();
-        currentHealth = maxHealth;
-        healthbar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -93,7 +85,7 @@ public class EnemyAction : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(playerTrans.position);
+        agent.SetDestination(player.position);
         lastActionDuration = Time.time;
     }
 
@@ -109,7 +101,8 @@ public class EnemyAction : MonoBehaviour
             Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
             bulletObj.transform.forward = shootingDirection.normalized;
             bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
-            Destroy(bulletObj, 5f);
+            Destroy(bulletObj, 3f);
+            print("attack!");
             ///End of attack code
 
             alreadyAttacked = true;
@@ -120,17 +113,5 @@ public class EnemyAction : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        healthbar.SetHealth(currentHealth);
-        if (currentHealth <= 0)Invoke(nameof(DestroyEnemy), 0.1f);
-    }
-
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
     }
 }
