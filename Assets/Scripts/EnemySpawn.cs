@@ -18,6 +18,6 @@ public class EnemySpawn : MonoBehaviour
 
     public bool IsAlive()
     {
-        return !animatedEnemyAction.isDead;
+        return !animatedEnemyAction.enemyHealth.isDead;
     }
 }

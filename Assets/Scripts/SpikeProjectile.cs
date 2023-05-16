@@ -17,7 +17,7 @@ public class SpikeProjectile : MonoBehaviour
         {
             Destroy(gameObject);
             // print("Enemy got hit by player");
-            animatedEnemy.TakeDamage(10);
+            animatedEnemy.enemyHealth.TakeDamage(10);
         }else if(collision.gameObject.tag == "Ground"){
             Destroy(gameObject);
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System;
 
 public class AnimatedEnemyAction : MonoBehaviour
 {
@@ -31,15 +32,14 @@ public class AnimatedEnemyAction : MonoBehaviour
     //public Transform shootPoint;
     //public float bulletSpeed;
 
-    //Health
-    public int maxHealth = 100;
-    public int currentHealth;
-    [NonReorderable] public bool isDead = false;
+    public EnemyHealth enemyHealth;
 
-    public Healthbar healthbar;
-
-    //Animator
-    Animator anim;
+    //Animation
+    public event EventHandler isWalk;
+    public event EventHandler isAttack;
+    public event EventHandler isIdle;
+    public event EventHandler isDead;
+    public event EventHandler isHit;
 
     void Awake()
     {
@@ -48,16 +48,18 @@ public class AnimatedEnemyAction : MonoBehaviour
         playerTrans = GameObject.FindWithTag("Player").GetComponent<Transform>();
         playerRef = GameObject.Find("CactusGuy");
         cactusGuy = playerRef.GetComponent<CactusGuy>();
-        healthbar = GetComponentInChildren<Healthbar>();
-        anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
-        healthbar.SetMaxHealth(maxHealth);
+        enemyHealth = GetComponent<EnemyHealth>();
+    }
+
+    void Start()
+    {
+        isIdle?.Invoke(this, EventArgs.Empty); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isDead)
+        if(!enemyHealth.isDead)
         {
             if(fov.canSeePlayer && !fov.canAttackPlayer)
             {
@@ -71,22 +73,14 @@ public class AnimatedEnemyAction : MonoBehaviour
             {
                 Patroling();            
             }
-            else{ 
-                anim.SetBool("isWalk", false);
-                anim.SetBool("isAttack", false);
-                anim.SetBool("isIdle", true);
-                anim.SetBool("isDead", false);
-                anim.SetBool("isHit", false);
+            else{
+                isIdle?.Invoke(this, EventArgs.Empty); 
                 return;
             }
         }
         else
         {   // Enemy is dead
-            anim.SetBool("isWalk", false);
-            anim.SetBool("isAttack", false);
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isDead", true);
-            anim.SetBool("isHit", false);
+            isDead?.Invoke(this, EventArgs.Empty);
             Invoke(nameof(DestroyEnemy), 1f);
         }
     }
@@ -94,8 +88,8 @@ public class AnimatedEnemyAction : MonoBehaviour
     private void Patroling()
     {
         if (!walkPointSet){
-             SearchWalkPoint();
-         }
+            SearchWalkPoint();
+        }
 
         if (walkPointSet){
             agent.SetDestination(walkPoint);
@@ -109,19 +103,14 @@ public class AnimatedEnemyAction : MonoBehaviour
 
         lastActionDuration = Time.time;
 
-            anim.SetBool("isWalk", true);
-            anim.SetBool("isAttack", false);
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isDead", false);
-            anim.SetBool("isHit", false);
-
+        isWalk?.Invoke(this, EventArgs.Empty);
     }
 
     private void SearchWalkPoint()
     {
         //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
+        float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -135,11 +124,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     {
         agent.SetDestination(playerTrans.position);
         lastActionDuration = Time.time;
-        anim.SetBool("isWalk", true);
-        anim.SetBool("isAttack", false);
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isDead", false);
-        anim.SetBool("isHit", false);
+        isWalk?.Invoke(this, EventArgs.Empty);
     }
 
     private void AttackPlayer()
@@ -160,29 +145,15 @@ public class AnimatedEnemyAction : MonoBehaviour
             cactusGuy.TakeDamage(damage);
             ///End of attack code
 
+            isAttack?.Invoke(this, EventArgs.Empty);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-        anim.SetBool("isWalk", false);
-        anim.SetBool("isAttack", true);
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isDead", false);
-        anim.SetBool("isHit", false);
     }
 
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        healthbar.SetHealth(currentHealth);
-        if (currentHealth <= 0)
-        {
-           isDead = true; 
-        }
     }
 
     private void DestroyEnemy()
