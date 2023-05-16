@@ -11,6 +11,8 @@ public class EnemyHealth : MonoBehaviour
 
     public Healthbar healthbar;
 
+    public event EventHandler isHit;
+
     void Awake()
     {
         healthbar = GetComponentInChildren<Healthbar>();
@@ -22,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         healthbar.SetHealth(currentHealth);
+        isHit?.Invoke(this, EventArgs.Empty);
         if (currentHealth <= 0)
         {
            isDead = true; 

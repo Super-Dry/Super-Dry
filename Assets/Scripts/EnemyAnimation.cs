@@ -6,6 +6,7 @@ using System;
 public class EnemyAnimation : MonoBehaviour
 {
     [SerializeField] private AnimatedEnemyAction animatedEnemyAction;
+    [SerializeField] private EnemyHealth enemyHealth;
 
     //Animator
     [SerializeField] private Animator anim;
@@ -15,6 +16,7 @@ public class EnemyAnimation : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         animatedEnemyAction = GetComponent<AnimatedEnemyAction>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Start()
@@ -23,7 +25,7 @@ public class EnemyAnimation : MonoBehaviour
         animatedEnemyAction.isAttack += animatedEnemyAction_isAttack;
         animatedEnemyAction.isIdle += animatedEnemyAction_isIdle;
         animatedEnemyAction.isDead += animatedEnemyAction_isDead;
-        animatedEnemyAction.isHit += animatedEnemyAction_isHit;
+        enemyHealth.isHit += animatedEnemyAction_isHit;
     }
 
     private void animatedEnemyAction_isHit(object sender, EventArgs e)

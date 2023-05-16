@@ -39,7 +39,6 @@ public class AnimatedEnemyAction : MonoBehaviour
     public event EventHandler isAttack;
     public event EventHandler isIdle;
     public event EventHandler isDead;
-    public event EventHandler isHit;
 
     void Awake()
     {
@@ -116,7 +115,6 @@ public class AnimatedEnemyAction : MonoBehaviour
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, Ground))
             walkPointSet = true;
-
     }
 
 
