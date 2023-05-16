@@ -61,7 +61,6 @@ public class EnemyAction : MonoBehaviour
         else return;
     }
 
-
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();

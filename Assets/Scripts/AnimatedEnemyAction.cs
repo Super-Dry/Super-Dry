@@ -34,7 +34,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     //Health
     public int maxHealth = 100;
     public int currentHealth;
-    bool isDead = false;
+    [NonReorderable] public bool isDead = false;
 
     public Healthbar healthbar;
 
@@ -43,11 +43,12 @@ public class AnimatedEnemyAction : MonoBehaviour
 
     void Awake()
     {
-        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
-        playerRef = GameObject.FindGameObjectWithTag("Player");
-        cactusGuy = playerRef.GetComponent<CactusGuy>();
         fov = GetComponent<FieldOfView>();
         agent = GetComponentInChildren<NavMeshAgent>(); //maybe get rid of in children
+        playerTrans = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        playerRef = GameObject.Find("CactusGuy");
+        cactusGuy = playerRef.GetComponent<CactusGuy>();
+        healthbar = GetComponentInChildren<Healthbar>();
         anim = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth);
@@ -89,7 +90,6 @@ public class AnimatedEnemyAction : MonoBehaviour
             Invoke(nameof(DestroyEnemy), 1f);
         }
     }
-
 
     private void Patroling()
     {

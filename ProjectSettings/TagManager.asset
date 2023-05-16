@@ -18,9 +18,9 @@ TagManager:
   - Ground
   - Camera
   - Enemy
-  - 
-  - 
-  - 
+  - Player
+  - Player's projectile
+  - Enemy's projectile
   - 
   - 
   - 
