@@ -19,6 +19,7 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private EnemyHealth enemyHealth;
 
     private List<Vector3> spawnPositionList;
+    private List<EnemySpawn> enemySpawnList;
     private Stage stage;
     
     void Awake()
@@ -38,24 +39,7 @@ public class BossBattle : MonoBehaviour
     {
         battleSystem.StartBossBattle += BattleSystem_StartBossBattle;
         enemyHealth.isHit += EnemyHealth_isHit;
-    }
-
-    private void EnemyHealth_isHit(object sender, EventArgs e)
-    {
-        Debug.Log(stage);
-        // Boss took damage
-        switch(stage){
-            case Stage.Stage_1:
-                if (enemyHealth.GetHealthNormalized() <= .7f){
-                    stage = Stage.Stage_2;
-                }
-                break;
-            case Stage.Stage_2:
-                if (enemyHealth.GetHealthNormalized() <= .5f){
-                    stage = Stage.Stage_3;
-                }
-                break;    
-        }
+        enemyHealth.onDead += EnemyHealth_onDead;
     }
 
     private void BattleSystem_StartBossBattle(object sender, EventArgs e)
@@ -67,10 +51,48 @@ public class BossBattle : MonoBehaviour
     private void StartBattle()
     {
         Debug.Log("Boss battle started!");
-        stage = Stage.Stage_1;
+        StartNextStage();
         boss.GetComponent<EnemySpawn>().Spawn();
        
         InvokeRepeating("SpawnEnemy", 0.5f, 5f);
+    }
+
+    private void StartNextStage() {
+        switch (stage) {
+            case Stage.WaitingToStart:
+                stage = Stage.Stage_1;
+                break;
+            case Stage.Stage_1:
+                stage = Stage.Stage_2;
+                break;
+            case Stage.Stage_2:
+                stage = Stage.Stage_3;
+                break;
+        }
+        Debug.Log("Starting next stage: " + stage);
+    }
+
+    private void EnemyHealth_isHit(object sender, EventArgs e)
+    {
+        // Boss took damage
+        switch(stage){
+            case Stage.Stage_1:
+                if (enemyHealth.GetHealthNormalized() <= .7f){
+                    StartNextStage();
+                }
+                break;
+            case Stage.Stage_2:
+                if (enemyHealth.GetHealthNormalized() <= .3f){
+                    StartNextStage();
+                }
+                break;    
+        }
+    }
+    
+    private void EnemyHealth_onDead(object sender, EventArgs e)
+    {
+        // Boss dead! Boss battle is over!
+        Debug.Log("Boss battle over!");
     }
 
     private void SpawnEnemy()
@@ -79,5 +101,10 @@ public class BossBattle : MonoBehaviour
 
         EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, spawnPosition, Quaternion.identity) as EnemySpawn;
         enemySpawn.Spawn();
+    }
+
+    private void DestroyAllEnemies()
+    {
+        
     }
 }

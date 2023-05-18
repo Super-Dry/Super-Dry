@@ -12,6 +12,8 @@ public class EnemyHealth : MonoBehaviour
     public Healthbar healthbar;
 
     public event EventHandler isHit;
+    public event EventHandler onDead;
+    
 
     void Awake()
     {
@@ -27,7 +29,8 @@ public class EnemyHealth : MonoBehaviour
         isHit?.Invoke(this, EventArgs.Empty);
         if (currentHealth <= 0)
         {
-           isDead = true; 
+           isDead = true;
+           onDead?.Invoke(this, EventArgs.Empty); 
         }
     }
 
