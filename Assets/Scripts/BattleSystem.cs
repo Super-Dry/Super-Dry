@@ -9,17 +9,21 @@ public class BattleSystem : MonoBehaviour
     {
         Idle,
         Active,
+        BossBattle,
         BattleOver,
     }
 
     [SerializeField] private BattleTrigger battleTrigger;
     [SerializeField] private Wave[] waveArray;
+    [SerializeField] private BossBattle bossBattle;
 
     private State state;
 
     void Awake()
     {
         state = State.Idle;
+        battleTrigger = GameObject.FindWithTag("BattleTrigger").GetComponent<BattleTrigger>();
+        bossBattle = GameObject.Find("BossBattle").GetComponent<BossBattle>();
     }
 
     void Start()
@@ -62,9 +66,9 @@ public class BattleSystem : MonoBehaviour
         {
             if (CheckWavesOver())
             {
-                // Battle is over!
-                state = State.BattleOver;
-                Debug.Log("Battle over!");
+                // Start boss battle
+                state = State.BossBattle;
+                Debug.Log("Start boss battle!");
             }
         }
     }

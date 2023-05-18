@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Ground
+  - BattleTrigger
   layers:
   - Default
   - TransparentFX
