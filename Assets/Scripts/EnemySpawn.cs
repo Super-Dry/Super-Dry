@@ -14,7 +14,6 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn() {
         gameObject.SetActive(true);
-        Debug.Log("spawn");
         // transform.SetParent(null); // Go to root
     }
 

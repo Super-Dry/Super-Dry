@@ -31,4 +31,12 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public float GetHealthNormalized() {
+        return (float)currentHealth / maxHealth;
+    }
+
+    public int GetHealthMax() {
+        return maxHealth;
+    }
+
 }
