@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemySpawn : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn() {
         gameObject.SetActive(true);
+        Debug.Log("spawn");
         // transform.SetParent(null); // Go to root
     }
 

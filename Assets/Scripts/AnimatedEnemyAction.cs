@@ -5,12 +5,13 @@ using System;
 
 public class AnimatedEnemyAction : MonoBehaviour
 {
-    public FieldOfView fov;
-    public NavMeshAgent agent;
-    public Transform playerTrans;
-    public GameObject playerRef;
+    private FieldOfView fov;
+    private NavMeshAgent agent;
+    private Transform playerTrans;
+    private GameObject playerRef;
     CactusGuy cactusGuy;
-    public Transform playerTargerPoint;
+    private GameObject playerTargerPoint;
+    private Transform playerTargerPointTransform;
     public LayerMask Ground;
 
     //Look Around
@@ -48,6 +49,8 @@ public class AnimatedEnemyAction : MonoBehaviour
         playerRef = GameObject.Find("CactusGuy");
         cactusGuy = playerRef.GetComponent<CactusGuy>();
         enemyHealth = GetComponent<EnemyHealth>();
+        playerTargerPoint = GameObject.Find("TargetPoint");
+        playerTargerPointTransform = playerTargerPoint.GetComponent<Transform>();
     }
 
     void Start()
@@ -128,7 +131,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
-        temp = new Vector3 (playerTargerPoint.position.x, transform.position.y, playerTargerPoint.position.z);
+        temp = new Vector3 (playerTargerPointTransform.position.x, transform.position.y, playerTargerPointTransform.position.z);
         transform.LookAt(temp);
 
         if (!alreadyAttacked)

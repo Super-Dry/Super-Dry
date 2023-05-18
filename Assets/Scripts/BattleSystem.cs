@@ -15,7 +15,8 @@ public class BattleSystem : MonoBehaviour
 
     [SerializeField] private BattleTrigger battleTrigger;
     [SerializeField] private Wave[] waveArray;
-    [SerializeField] private BossBattle bossBattle;
+
+    public event EventHandler StartBossBattle;
 
     private State state;
 
@@ -23,7 +24,6 @@ public class BattleSystem : MonoBehaviour
     {
         state = State.Idle;
         battleTrigger = GameObject.FindWithTag("BattleTrigger").GetComponent<BattleTrigger>();
-        bossBattle = GameObject.Find("BossBattle").GetComponent<BossBattle>();
     }
 
     void Start()
@@ -67,8 +67,9 @@ public class BattleSystem : MonoBehaviour
             if (CheckWavesOver())
             {
                 // Start boss battle
+                Debug.Log("Starting boss battle!");
                 state = State.BossBattle;
-                Debug.Log("Start boss battle!");
+                StartBossBattle?.Invoke(this, EventArgs.Empty);
             }
         }
     }
