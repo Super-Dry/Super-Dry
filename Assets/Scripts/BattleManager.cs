@@ -45,6 +45,7 @@ public class BattleManager : MonoBehaviour
     {
         if(GetNextBattle()){
             // Wait for player to return to village before next battlew
+            Debug.Log("Return to village first before starting next battle");
             villageTrigger.OnPlayerEnterTrigger += VillageTrigger_OnPlayerEnterTrigger;
         }else{
             Debug.Log("Game over!");
