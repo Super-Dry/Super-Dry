@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System;
 
 public class EnemyAction : MonoBehaviour
 {
-    public FieldOfView fov;
-    public NavMeshAgent agent;
-    public Transform playerTrans;
-    public Transform playerTargerPoint;
+    private FieldOfView fov;
+    private NavMeshAgent agent;
+    private Transform playerTrans;
+    private GameObject playerRef;
+    CactusGuy cactusGuy;
+    private GameObject playerTargerPoint;
+    private Transform playerTargerPointTransform;
     public LayerMask Ground;
 
     //Look Around
-    public float lookAroundAngle;
     public float pauseTime;
     private float lastActionDuration;
 
@@ -21,52 +24,75 @@ public class EnemyAction : MonoBehaviour
     public float walkPointRange;
     
     //Attacking
+    public Vector3 temp;
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
-    public GameObject bullet;
-    public Transform shootPoint;
-    public float bulletSpeed;
-    public int damage;
+    public IAttack enemyAttack;
 
-    //Health
-    public int maxHealth = 100;
-    public int currentHealth;
+    public EnemyHealth enemyHealth;
 
-    public Healthbar healthbar;
+    //Animation
+    public event EventHandler isWalk;
+    public event EventHandler isAttack;
+    public event EventHandler isIdle;
+    public event EventHandler isDead;
 
     void Awake()
     {
-        playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
         fov = GetComponent<FieldOfView>();
-        agent = GetComponent<NavMeshAgent>();
-        currentHealth = maxHealth;
-        healthbar.SetMaxHealth(maxHealth);
+        agent = GetComponentInChildren<NavMeshAgent>();
+        playerTrans = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        playerRef = GameObject.Find("CactusGuy");
+        cactusGuy = playerRef.GetComponent<CactusGuy>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        playerTargerPoint = GameObject.Find("TargetPoint");
+        playerTargerPointTransform = playerTargerPoint.GetComponent<Transform>();
+        enemyAttack = gameObject.GetComponent<IAttack>();
+    }
+
+    void Start()
+    {
+        isIdle?.Invoke(this, EventArgs.Empty); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(fov.canSeePlayer && !fov.canAttackPlayer)
+        if(!enemyHealth.IsDead())
         {
-            ChasePlayer();
+            if(fov.canSeePlayer && !fov.canAttackPlayer)
+            {
+                ChasePlayer();
+            }
+            else if(fov.canSeePlayer && fov.canAttackPlayer)
+            {
+                AttackPlayer();
+            }
+            else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
+            {
+                Patroling();            
+            }
+            else{
+                isIdle?.Invoke(this, EventArgs.Empty); 
+                return;
+            }
         }
-        else if(fov.canSeePlayer && fov.canAttackPlayer)
-        {
-            AttackPlayer();
+        else
+        {   // Enemy is dead
+            isDead?.Invoke(this, EventArgs.Empty);
+            Invoke(nameof(DestroyEnemy), 1f);
         }
-        else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
-        {
-            Patroling();            
-        }
-        else return;
     }
 
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
+        if (!walkPointSet){
+            SearchWalkPoint();
+        }
 
-        if (walkPointSet)
+        if (walkPointSet){
             agent.SetDestination(walkPoint);
+        }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
@@ -75,13 +101,15 @@ public class EnemyAction : MonoBehaviour
             walkPointSet = false;
 
         lastActionDuration = Time.time;
+
+        isWalk?.Invoke(this, EventArgs.Empty);
     }
 
     private void SearchWalkPoint()
     {
         //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
+        float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -94,23 +122,22 @@ public class EnemyAction : MonoBehaviour
     {
         agent.SetDestination(playerTrans.position);
         lastActionDuration = Time.time;
+        isWalk?.Invoke(this, EventArgs.Empty);
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
-        transform.LookAt(playerTargerPoint);
+        temp = new Vector3 (playerTargerPointTransform.position.x, transform.position.y, playerTargerPointTransform.position.z);
+        transform.LookAt(temp);
 
         if (!alreadyAttacked)
         {
             // Attack code here
-            GameObject bulletObj = Instantiate(bullet, shootPoint.position, Quaternion.identity);
-            Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
-            bulletObj.transform.forward = shootingDirection.normalized;
-            bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
-            Destroy(bulletObj, 5f);
+            enemyAttack.Attack();
             ///End of attack code
 
+            isAttack?.Invoke(this, EventArgs.Empty);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -119,13 +146,6 @@ public class EnemyAction : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        healthbar.SetHealth(currentHealth);
-        if (currentHealth <= 0)Invoke(nameof(DestroyEnemy), 0.1f);
     }
 
     private void DestroyEnemy()

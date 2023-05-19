@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    private AnimatedEnemyAction animatedEnemyAction;
+    private EnemyAction enemyAction;
 
     private void Awake() {
         gameObject.SetActive(false);
-        animatedEnemyAction = GetComponent<AnimatedEnemyAction>();
+        enemyAction = GetComponent<EnemyAction>();
     }
 
     public void Spawn() {
@@ -19,11 +19,11 @@ public class EnemySpawn : MonoBehaviour
 
     public void KillEnemy()
     {
-        animatedEnemyAction.enemyHealth.currentHealth = 0;
+        enemyAction.enemyHealth.currentHealth = 0;
     }
 
     public bool IsAlive()
     {
-        return !animatedEnemyAction.enemyHealth.IsDead();
+        return !enemyAction.enemyHealth.IsDead();
     }
 }

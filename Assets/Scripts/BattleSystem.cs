@@ -97,6 +97,7 @@ public class BattleSystem : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer <= 0)
                 {
+                    Debug.Log("Wave spawned!");
                     SpawnEnemies();
                 }
             }

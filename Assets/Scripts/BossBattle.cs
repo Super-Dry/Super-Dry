@@ -14,7 +14,8 @@ public class BossBattle : MonoBehaviour
     }
 
     [SerializeField] private BattleSystem battleSystem;
-    [SerializeField] private EnemySpawn pfEnemySpawn;
+    [SerializeField] private EnemySpawn pfEnemyCapsuleSpawn;
+    [SerializeField] private EnemySpawn pfEnemyCactusSpawn;
     [SerializeField] private GameObject boss;
     [SerializeField] private EnemyHealth enemyHealth;
     [SerializeField] private float enemySpawnRate;
@@ -119,6 +120,11 @@ public class BossBattle : MonoBehaviour
         }
 
         Vector3 spawnPosition = spawnPositionList[UnityEngine.Random.Range(0, spawnPositionList.Count)];
+
+        EnemySpawn pfEnemySpawn;
+        int rand = UnityEngine.Random.Range(0, 100);
+        pfEnemySpawn = pfEnemyCactusSpawn;                      // By default spawn enemy cactus
+        if (rand < 45) pfEnemySpawn = pfEnemyCapsuleSpawn;      // 45% chances of spawning enemy capsule
 
         EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, spawnPosition, Quaternion.identity) as EnemySpawn;
         enemySpawn.Spawn();

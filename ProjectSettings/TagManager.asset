@@ -9,6 +9,8 @@ TagManager:
   - BattleTrigger
   - RoundManager
   - VillageTrigger
+  - ShootPoint
+  - PlayerTargetPoint
   layers:
   - Default
   - TransparentFX

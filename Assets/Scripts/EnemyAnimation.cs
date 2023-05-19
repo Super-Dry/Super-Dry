@@ -5,7 +5,7 @@ using System;
 
 public class EnemyAnimation : MonoBehaviour
 {
-    [SerializeField] private AnimatedEnemyAction animatedEnemyAction;
+    [SerializeField] private EnemyAction enemyAction;
     [SerializeField] private EnemyHealth enemyHealth;
 
     //Animator
@@ -15,16 +15,16 @@ public class EnemyAnimation : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
-        animatedEnemyAction = GetComponent<AnimatedEnemyAction>();
+        enemyAction = GetComponent<EnemyAction>();
         enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Start()
     {
-        animatedEnemyAction.isWalk += animatedEnemyAction_isWalk;
-        animatedEnemyAction.isAttack += animatedEnemyAction_isAttack;
-        animatedEnemyAction.isIdle += animatedEnemyAction_isIdle;
-        animatedEnemyAction.isDead += animatedEnemyAction_isDead;
+        enemyAction.isWalk += animatedEnemyAction_isWalk;
+        enemyAction.isAttack += animatedEnemyAction_isAttack;
+        enemyAction.isIdle += animatedEnemyAction_isIdle;
+        enemyAction.isDead += animatedEnemyAction_isDead;
         enemyHealth.isHit += animatedEnemyAction_isHit;
     }
 
