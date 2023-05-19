@@ -7,7 +7,6 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    [NonSerialized] public bool isDead = false;
 
     public Healthbar healthbar;
 
@@ -29,9 +28,12 @@ public class EnemyHealth : MonoBehaviour
         isHit?.Invoke(this, EventArgs.Empty);
         if (currentHealth <= 0)
         {
-           isDead = true;
            onDead?.Invoke(this, EventArgs.Empty); 
         }
+    }
+
+    public bool IsDead() {
+        return currentHealth <= 0;
     }
 
     public float GetHealthNormalized() {

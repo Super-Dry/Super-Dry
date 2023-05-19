@@ -61,7 +61,7 @@ public class AnimatedEnemyAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!enemyHealth.isDead)
+        if(!enemyHealth.IsDead())
         {
             if(fov.canSeePlayer && !fov.canAttackPlayer)
             {

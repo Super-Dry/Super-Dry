@@ -17,8 +17,13 @@ public class EnemySpawn : MonoBehaviour
         // transform.SetParent(null); // Go to root
     }
 
+    public void KillEnemy()
+    {
+        animatedEnemyAction.enemyHealth.currentHealth = 0;
+    }
+
     public bool IsAlive()
     {
-        return !animatedEnemyAction.enemyHealth.isDead;
+        return !animatedEnemyAction.enemyHealth.IsDead();
     }
 }

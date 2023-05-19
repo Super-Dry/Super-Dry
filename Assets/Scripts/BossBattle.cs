@@ -17,16 +17,21 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private EnemySpawn pfEnemySpawn;
     [SerializeField] private GameObject boss;
     [SerializeField] private EnemyHealth enemyHealth;
+    [SerializeField] private float enemySpawnRate;
+    [SerializeField] private float maxEnemyAlive;
 
     private List<Vector3> spawnPositionList;
     private List<EnemySpawn> enemySpawnList;
     private Stage stage;
+
+    public event EventHandler bossBattleOver;
     
     void Awake()
     {
         battleSystem = transform.GetComponentInParent<BattleSystem>();
         enemyHealth = boss.GetComponent<EnemyHealth>();
         spawnPositionList = new List<Vector3>();
+        enemySpawnList = new List<EnemySpawn>();
         
         foreach (Transform spawnPosition in transform.Find("SpawnPositionList"))
         {
@@ -54,7 +59,7 @@ public class BossBattle : MonoBehaviour
         StartNextStage();
         boss.GetComponent<EnemySpawn>().Spawn();
        
-        InvokeRepeating("SpawnEnemy", 0.5f, 5f);
+        InvokeRepeating("SpawnEnemy", 0.5f, enemySpawnRate);
     }
 
     private void StartNextStage() {
@@ -92,19 +97,43 @@ public class BossBattle : MonoBehaviour
     private void EnemyHealth_onDead(object sender, EventArgs e)
     {
         // Boss dead! Boss battle is over!
+        enemyHealth.isHit -= EnemyHealth_isHit;
+        enemyHealth.onDead -= EnemyHealth_onDead;
         Debug.Log("Boss battle over!");
+        CancelInvoke();
+        DestroyAllEnemies();
+        bossBattleOver?.Invoke(this, EventArgs.Empty);
     }
 
     private void SpawnEnemy()
     {   
+        int aliveCount = 0;
+        foreach (EnemySpawn enemySpawned in enemySpawnList) {
+            if (enemySpawned.IsAlive()) {
+                aliveCount++;
+                if (aliveCount >= maxEnemyAlive){
+                    // Don't spawn more enemies
+                    return;
+                }
+            }
+        }
+
         Vector3 spawnPosition = spawnPositionList[UnityEngine.Random.Range(0, spawnPositionList.Count)];
 
         EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, spawnPosition, Quaternion.identity) as EnemySpawn;
         enemySpawn.Spawn();
+        
+        enemySpawnList.Add(enemySpawn);
     }
 
     private void DestroyAllEnemies()
     {
-        
+        foreach (EnemySpawn enemySpawn in enemySpawnList)
+        {
+            if (enemySpawn.IsAlive())
+            {
+                enemySpawn.KillEnemy();
+            }
+        }
     }
 }
