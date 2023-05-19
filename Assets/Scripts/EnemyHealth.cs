@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour
 
     public Healthbar healthbar;
 
-    public event EventHandler isHit;
+    public event EventHandler onHitAnimation;
     public event EventHandler onDead;
     
 
@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         healthbar.SetHealth(currentHealth);
-        isHit?.Invoke(this, EventArgs.Empty);
+        onHitAnimation?.Invoke(this, EventArgs.Empty);
         if (currentHealth <= 0)
         {
            onDead?.Invoke(this, EventArgs.Empty); 

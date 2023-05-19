@@ -44,14 +44,14 @@ public class BossBattle : MonoBehaviour
     void Start()
     {
         battleSystem.StartBossBattle += BattleSystem_StartBossBattle;
-        enemyHealth.isHit += EnemyHealth_isHit;
+        enemyHealth.onHitAnimation += EnemyHealth_onHitAnimation;
         enemyHealth.onDead += EnemyHealth_onDead;
     }
 
     private void BattleSystem_StartBossBattle(object sender, EventArgs e)
     {
-        StartBattle();
         battleSystem.StartBossBattle -= BattleSystem_StartBossBattle;
+        StartBattle();
     }
 
     private void StartBattle()
@@ -78,7 +78,7 @@ public class BossBattle : MonoBehaviour
         Debug.Log("Starting next stage: " + stage);
     }
 
-    private void EnemyHealth_isHit(object sender, EventArgs e)
+    private void EnemyHealth_onHitAnimation(object sender, EventArgs e)
     {
         // Boss took damage
         switch(stage){
@@ -98,7 +98,7 @@ public class BossBattle : MonoBehaviour
     private void EnemyHealth_onDead(object sender, EventArgs e)
     {
         // Boss dead! Boss battle is over!
-        enemyHealth.isHit -= EnemyHealth_isHit;
+        enemyHealth.onHitAnimation -= EnemyHealth_onHitAnimation;
         enemyHealth.onDead -= EnemyHealth_onDead;
         Debug.Log("Boss battle over!");
         CancelInvoke();

@@ -5,11 +5,17 @@ using System;
 
 public class EnemyAction : MonoBehaviour
 {
+    private enum State {
+        Patroling,
+        ChasePlayer,
+        AttackPlayer,
+    }
+
     private FieldOfView fov;
     private NavMeshAgent agent;
     private Transform playerTrans;
     private GameObject playerRef;
-    CactusGuy cactusGuy;
+    private CactusGuy cactusGuy;
     private GameObject playerTargerPoint;
     private Transform playerTargerPointTransform;
     public LayerMask Ground;
@@ -32,10 +38,10 @@ public class EnemyAction : MonoBehaviour
     public EnemyHealth enemyHealth;
 
     //Animation
-    public event EventHandler isWalk;
-    public event EventHandler isAttack;
-    public event EventHandler isIdle;
-    public event EventHandler isDead;
+    public event EventHandler onWalkAnimation;
+    public event EventHandler onAttackAnimation;
+    public event EventHandler onIdleAnimation;
+    public event EventHandler onDeadAnimation;
 
     void Awake()
     {
@@ -52,7 +58,7 @@ public class EnemyAction : MonoBehaviour
 
     void Start()
     {
-        isIdle?.Invoke(this, EventArgs.Empty); 
+        onIdleAnimation?.Invoke(this, EventArgs.Empty); 
     }
 
     // Update is called once per frame
@@ -73,13 +79,13 @@ public class EnemyAction : MonoBehaviour
                 Patroling();            
             }
             else{
-                isIdle?.Invoke(this, EventArgs.Empty); 
+                onIdleAnimation?.Invoke(this, EventArgs.Empty); 
                 return;
             }
         }
         else
         {   // Enemy is dead
-            isDead?.Invoke(this, EventArgs.Empty);
+            onDeadAnimation?.Invoke(this, EventArgs.Empty);
             Invoke(nameof(DestroyEnemy), 1f);
         }
     }
@@ -102,7 +108,7 @@ public class EnemyAction : MonoBehaviour
 
         lastActionDuration = Time.time;
 
-        isWalk?.Invoke(this, EventArgs.Empty);
+        onWalkAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     private void SearchWalkPoint()
@@ -122,7 +128,7 @@ public class EnemyAction : MonoBehaviour
     {
         agent.SetDestination(playerTrans.position);
         lastActionDuration = Time.time;
-        isWalk?.Invoke(this, EventArgs.Empty);
+        onWalkAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     private void AttackPlayer()
@@ -137,7 +143,7 @@ public class EnemyAction : MonoBehaviour
             enemyAttack.Attack();
             ///End of attack code
 
-            isAttack?.Invoke(this, EventArgs.Empty);
+            onAttackAnimation?.Invoke(this, EventArgs.Empty);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }

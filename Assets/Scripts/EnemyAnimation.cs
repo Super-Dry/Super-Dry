@@ -21,14 +21,14 @@ public class EnemyAnimation : MonoBehaviour
 
     void Start()
     {
-        enemyAction.isWalk += animatedEnemyAction_isWalk;
-        enemyAction.isAttack += animatedEnemyAction_isAttack;
-        enemyAction.isIdle += animatedEnemyAction_isIdle;
-        enemyAction.isDead += animatedEnemyAction_isDead;
-        enemyHealth.isHit += animatedEnemyAction_isHit;
+        enemyAction.onWalkAnimation += animatedEnemyAction_onWalkAnimation;
+        enemyAction.onAttackAnimation += animatedEnemyAction_onAttackAnimation;
+        enemyAction.onIdleAnimation += animatedEnemyAction_onIdleAnimation;
+        enemyAction.onDeadAnimation += animatedEnemyAction_onDeadAnimation;
+        enemyHealth.onHitAnimation += animatedEnemyAction_onHitAnimation;
     }
 
-    private void animatedEnemyAction_isHit(object sender, EventArgs e)
+    private void animatedEnemyAction_onHitAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isHit", true);
         anim.SetBool("isWalk", false);
@@ -37,7 +37,7 @@ public class EnemyAnimation : MonoBehaviour
         anim.SetBool("isDead", false);
     }
 
-    private void animatedEnemyAction_isDead(object sender, EventArgs e)
+    private void animatedEnemyAction_onDeadAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isDead", true);
         anim.SetBool("isWalk", false);
@@ -46,7 +46,7 @@ public class EnemyAnimation : MonoBehaviour
         anim.SetBool("isHit", false);
     }
 
-    private void animatedEnemyAction_isIdle(object sender, EventArgs e)
+    private void animatedEnemyAction_onIdleAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isIdle", true);
         anim.SetBool("isWalk", false);
@@ -55,7 +55,7 @@ public class EnemyAnimation : MonoBehaviour
         anim.SetBool("isDead", false);
     }
 
-    private void animatedEnemyAction_isAttack(object sender, EventArgs e)
+    private void animatedEnemyAction_onAttackAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isAttack", true);
         anim.SetBool("isWalk", false);
@@ -64,7 +64,7 @@ public class EnemyAnimation : MonoBehaviour
         anim.SetBool("isDead", false);
     }
 
-    private void animatedEnemyAction_isWalk(object sender, EventArgs e)
+    private void animatedEnemyAction_onWalkAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isWalk", true);
         anim.SetBool("isAttack", false);
