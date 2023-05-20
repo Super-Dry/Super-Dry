@@ -5,12 +5,6 @@ using System;
 
 public class EnemyAction : MonoBehaviour
 {
-    private enum State {
-        Patroling,
-        ChasePlayer,
-        AttackPlayer,
-    }
-
     private FieldOfView fov;
     private NavMeshAgent agent;
     private Transform playerTrans;
@@ -58,7 +52,7 @@ public class EnemyAction : MonoBehaviour
 
     void Start()
     {
-        onIdleAnimation?.Invoke(this, EventArgs.Empty); 
+        onIdleAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     // Update is called once per frame

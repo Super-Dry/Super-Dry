@@ -46,8 +46,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }else{
             animator.SetBool("isWalking", false);
         }
-                
-        transform.rotation = cam.transform.rotation;
+        transform.rotation = cam.transform.rotation;                
+        // transform.rotation = Quaternion.Euler(0, cam.transform.rotation.y, cam.transform.rotation.z);
 
         if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
         {
