@@ -7,6 +7,11 @@ public class Shieldbar : MonoBehaviour
 {
     public Slider slider;
 
+    void Awake()
+    {
+        slider = GetComponent<Slider>();
+    }
+
     public void SetMaxShield(int shield)
     {
         slider.maxValue = shield;

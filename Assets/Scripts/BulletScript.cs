@@ -12,6 +12,8 @@ public class BulletScript : MonoBehaviour
             Destroy(gameObject);
             // print("Player got hit by enemy");
             player.TakeDamage(10);
+        }else if(collision.gameObject.tag == "Ground"){
+            Destroy(gameObject);
         }
     }
 }

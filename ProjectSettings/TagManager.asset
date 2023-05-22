@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Ground
+  - BattleTrigger
+  - RoundManager
+  - VillageTrigger
+  - ShootPoint
+  - PlayerTargetPoint
   layers:
   - Default
   - TransparentFX
@@ -18,9 +23,9 @@ TagManager:
   - Ground
   - Camera
   - Enemy
-  - 
-  - 
-  - 
+  - Player
+  - Player's projectile
+  - Enemy's projectile
   - 
   - 
   - 
