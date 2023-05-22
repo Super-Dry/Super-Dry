@@ -631,6 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  camTransform: {fileID: 0}
 --- !u!1 &4868459546073276213
 GameObject:
   m_ObjectHideFlags: 0

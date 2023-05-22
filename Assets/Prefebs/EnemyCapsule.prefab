@@ -243,7 +243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 3856601463508498409, guid: edd04bd03d6803447abf9b097a695962, type: 3}
+  shootPointObj: {fileID: 0}
   shootPoint: {fileID: 0}
+  playerTargerPointObj: {fileID: 0}
   playerTargerPoint: {fileID: 0}
   bulletSpeed: 30
   m_damage: 5
@@ -425,7 +427,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

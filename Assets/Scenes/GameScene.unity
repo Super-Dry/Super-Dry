@@ -159,8 +159,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 543450652930320953}
-  m_Follow: {fileID: 543450652930320953}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 40
@@ -261,7 +261,7 @@ Transform:
   - {fileID: 1928508750}
   - {fileID: 418294758}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &58942357
 MonoBehaviour:
@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194228}
+  camTransform: {fileID: 0}
 --- !u!1 &269009545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1022,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!224 &816830617
 RectTransform:
@@ -1402,7 +1403,7 @@ Transform:
   m_Children:
   - {fileID: 1643626049}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 23.376, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -1507,7 +1508,7 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -2299,11 +2300,6 @@ Transform:
   m_Father: {fileID: 58942356}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2082624106 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3165483153712173373, guid: db25798f27d2c424f8fa5ef63b4cb2e4, type: 3}
-  m_PrefabInstance: {fileID: 3165483154582340439}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2139496255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,16 +2376,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139496255}
   m_CullTransparentMesh: 1
---- !u!4 &543450652930320953 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3198883211232979310, guid: db25798f27d2c424f8fa5ef63b4cb2e4, type: 3}
-  m_PrefabInstance: {fileID: 3165483154582340439}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &919132148725575811 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2823589812965012436, guid: db25798f27d2c424f8fa5ef63b4cb2e4, type: 3}
-  m_PrefabInstance: {fileID: 3165483154582340439}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3165483154582340439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2457,6 +2443,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3805882240184501384, guid: db25798f27d2c424f8fa5ef63b4cb2e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6427298842920371523, guid: db25798f27d2c424f8fa5ef63b4cb2e4, type: 3}
       propertyPath: cam
       value: 
@@ -2473,7 +2463,7 @@ PrefabInstance:
     - target: {fileID: 576133037231540008, guid: 5239723e88e14a840b9060bc12b77c89, type: 3}
       propertyPath: playerRef
       value: 
-      objectReference: {fileID: 919132148725575811}
+      objectReference: {fileID: 0}
     - target: {fileID: 837939288109358741, guid: 5239723e88e14a840b9060bc12b77c89, type: 3}
       propertyPath: m_Name
       value: EnemyCactus
@@ -2533,7 +2523,7 @@ PrefabInstance:
     - target: {fileID: 7539050339962719571, guid: 5239723e88e14a840b9060bc12b77c89, type: 3}
       propertyPath: playerTargerPoint
       value: 
-      objectReference: {fileID: 2082624106}
+      objectReference: {fileID: 0}
     - target: {fileID: 8451367279362937905, guid: 5239723e88e14a840b9060bc12b77c89, type: 3}
       propertyPath: cam
       value: 
@@ -2615,7 +2605,7 @@ PrefabInstance:
     - target: {fileID: 1261468375121948582, guid: ed0da180981386c4da8df8dfaac48b71, type: 3}
       propertyPath: playerRef
       value: 
-      objectReference: {fileID: 919132148725575811}
+      objectReference: {fileID: 0}
     - target: {fileID: 4361184497390991951, guid: ed0da180981386c4da8df8dfaac48b71, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2663,7 +2653,7 @@ PrefabInstance:
     - target: {fileID: 4803053357164075729, guid: ed0da180981386c4da8df8dfaac48b71, type: 3}
       propertyPath: playerTargerPoint
       value: 
-      objectReference: {fileID: 2082624106}
+      objectReference: {fileID: 0}
     - target: {fileID: 5690149405919868445, guid: ed0da180981386c4da8df8dfaac48b71, type: 3}
       propertyPath: cam
       value: 
