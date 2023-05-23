@@ -13,7 +13,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private BattleSystem[] battleArray;
     [SerializeField] private BattleTrigger battleTrigger;
     [SerializeField] private VillageTrigger villageTrigger;
-    [SerializeField] private OnScreenPrompt onScreenPrompt;
+    [SerializeField] private OnScreenText onScreenText;
+    [SerializeField] private OnScreenText tittle;
     [SerializeField] private Gate gate;
 
     private BattleSystem currentBattle;
@@ -26,7 +27,6 @@ public class BattleManager : MonoBehaviour
     {
         battleTrigger = GameObject.FindWithTag("BattleTrigger").GetComponent<BattleTrigger>();
         villageTrigger = GameObject.FindWithTag("VillageTrigger").GetComponent<VillageTrigger>();
-        onScreenPrompt = GetComponent<OnScreenPrompt>();
         gate = GameObject.Find("Gates").GetComponent<Gate>();
         NumOfBattle = battleArray.Length - 1;
         currentBattleNumber = 0;
@@ -53,6 +53,7 @@ public class BattleManager : MonoBehaviour
         state = State.atBattle;
         currentBattle.onBattleOver += CurrentRound_OnBattleOver;
         currentBattle.StartBattle();
+        tittle.StartFadeOut();
     }
 
     private void CurrentRound_OnBattleOver(object sender, EventArgs e)
@@ -61,7 +62,7 @@ public class BattleManager : MonoBehaviour
 
         if(GetNextBattle()){
             // Wait for player to return to village before next battlew
-            onScreenPrompt.setText("Return to the village before the next battle!");
+            onScreenText.setText("Return to the village before the next battle!");
             Debug.Log("Return to village first before starting next battle");
             villageTrigger.OnPlayerEnterTrigger += VillageTrigger_OnPlayerEnterTrigger;
         }else{
@@ -74,10 +75,10 @@ public class BattleManager : MonoBehaviour
         villageTrigger.OnPlayerEnterTrigger -= VillageTrigger_OnPlayerEnterTrigger;
         if(state == State.atVillage){
             villageTrigger.OnPlayerExitTrigger += VillageTrigger_OnPlayerExitTrigger;
-            onScreenPrompt.setText("Press [E] to start the battle");
+            onScreenText.setText("Press [E] to start the battle");
             waitForEKey = StartCoroutine(waitForKeyPress(KeyCode.E));
         }else if (state == State.atBattle){
-            onScreenPrompt.clearText();
+            onScreenText.clearText();
             Debug.Log("Player returned to village!");
             gate.coroutineQueue.Enqueue(gate.Close());
             villageTrigger.OnPlayerEnterTrigger += VillageTrigger_OnPlayerEnterTrigger;
@@ -90,7 +91,7 @@ public class BattleManager : MonoBehaviour
     {
         StopCoroutine(waitForEKey);
         villageTrigger.OnPlayerExitTrigger -= VillageTrigger_OnPlayerExitTrigger;
-        onScreenPrompt.clearText();
+        onScreenText.clearText();
         villageTrigger.OnPlayerEnterTrigger += VillageTrigger_OnPlayerEnterTrigger;
     }
 
@@ -102,7 +103,9 @@ public class BattleManager : MonoBehaviour
             if(Input.GetKeyDown(key))
             {
                 done = true; // breaks the loop
-                onScreenPrompt.clearText();
+                onScreenText.clearText();
+                tittle.Show();
+                tittle.setText("Battle " + (currentBattleNumber + 1));
                 gate.coroutineQueue.Enqueue(gate.Open());
                 villageTrigger.OnPlayerExitTrigger -= VillageTrigger_OnPlayerExitTrigger;
                 battleTrigger.OnPlayerEnterTrigger += BattleTrigger_OnPlayerEnterTrigger;
