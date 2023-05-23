@@ -76,6 +76,17 @@ public class CactusGuy : MonoBehaviour
     //     }
     // }
 
+    void OnMouseEnter(){
+        this.TakeDamage(5);
+    }
+
+    // void OnCollisionEnter(Collision c){
+    //     if(c.gameObject.name == "HomeWaterSource"){
+    //         Debug.Log("AHHHHHH");
+    //         this.HealHealth(5);
+    //     }
+    // }
+
     // public void RestartScene()
     //  {
     //      Scene thisScene = SceneManager.GetActiveScene();
