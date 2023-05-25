@@ -7,19 +7,30 @@ public class WaterScript : MonoBehaviour
 {
     float _interval = .1f;
     float _time = 0f;
-    
+
+    int totalShieldPointsRemaining = 100;
+
+    //Heal player gradually while they are in water
+    //Adjust the interval float to change rate of healing
+    //(interval until next heal of 1 point occurs)
     private void OnTriggerStay(Collider c){
         if(c.gameObject.name == "CactusGuy"){
 
-            Debug.Log("please work for the love of god");
+           // Debug.Log("please work for the love of god");
 
             var player = c.gameObject.GetComponent<CactusGuy>();
             _time += Time.deltaTime;
-            Debug.Log(_time);
+            // Debug.Log(_time);
             if(_time >= _interval){
-                Debug.Log("healing!");
-                player.HealShield(1);
-                _time -= _interval;
+                if(totalShieldPointsRemaining > 0){
+                    int shieldPointsToHeal = 1;
+                    Debug.Log("healing!");
+                    Debug.Log("Remaining water in pool: " + totalShieldPointsRemaining);
+                    
+                    player.HealShield(shieldPointsToHeal);
+                    totalShieldPointsRemaining -= shieldPointsToHeal;
+                    _time -= _interval;
+                }
             }
         }
 
