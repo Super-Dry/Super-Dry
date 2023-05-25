@@ -8,7 +8,7 @@ public class WaterScript : MonoBehaviour
     float _interval = .1f;
     float _time = 0f;
 
-    int totalShieldPointsRemaining = 100;
+    public int totalShieldPointsRemaining = 100;
 
     //Heal player gradually while they are in water
     //Adjust the interval float to change rate of healing
