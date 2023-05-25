@@ -5,6 +5,16 @@ using System;
 
 public class EnemyAction : MonoBehaviour
 {
+    private enum State{
+        Idle,
+        Patroling,
+        Walking,
+        Chasing,
+        Attacking,
+        Dead,
+    }
+
+
     private FieldOfView fov;
     private NavMeshAgent agent;
     private Transform playerTrans;
@@ -13,6 +23,7 @@ public class EnemyAction : MonoBehaviour
     private GameObject playerTargerPoint;
     private Transform playerTargerPointTransform;
     public LayerMask Ground;
+    private State state;
 
     //Look Around
     public float pauseTime;
@@ -48,70 +59,99 @@ public class EnemyAction : MonoBehaviour
         playerTargerPoint = GameObject.Find("TargetPoint");
         playerTargerPointTransform = playerTargerPoint.GetComponent<Transform>();
         enemyAttack = gameObject.GetComponent<IAttack>();
-
-
     }
 
     void Start()
     {
-        onIdleAnimation?.Invoke(this, EventArgs.Empty);
+        state = State.Idle;
+        lastActionDuration = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
+        switch (state){
+            case State.Idle:
+                onIdleAnimation?.Invoke(this, EventArgs.Empty);
+                break;
+            case State.Patroling:
+                Patroling();
+                break;
+            case State.Walking:
+                Walking();
+                onWalkAnimation?.Invoke(this, EventArgs.Empty);
+                break;
+            case State.Chasing:
+                ChasePlayer();
+                onWalkAnimation?.Invoke(this, EventArgs.Empty);
+                break;
+            case State.Attacking:
+                AttackPlayer();
+                onAttackAnimation?.Invoke(this, EventArgs.Empty);
+                break;
+            case State.Dead:
+                agent.SetDestination(transform.position);
+                onDeadAnimation?.Invoke(this, EventArgs.Empty);
+                Invoke(nameof(DestroyEnemy), 5f);
+                break;
+            default:
+                state = State.Idle;
+                break;    
+        }
         if(!enemyHealth.IsDead())
         {
             if(fov.canSeePlayer && !fov.canAttackPlayer)
             {
-                Debug.Log("Chase");
-                ChasePlayer();
+                state = State.Chasing;
             }
             else if(fov.canSeePlayer && fov.canAttackPlayer)
             {
-                Debug.Log("attack");
-                AttackPlayer();
+                state = State.Attacking;
             }
             else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
             {
-                Debug.Log("Patroling");
-                Patroling();            
+                state = State.Patroling;
+            }
+            else if(state == State.Walking){
+                return;
             }
             else{
-                // onIdleAnimation?.Invoke(this, EventArgs.Empty);
-                // Debug.Log("onIdleAnimation");
+                state = State.Idle;
                 return;
             }
         }
         else
         {   // Enemy is dead
-            onDeadAnimation?.Invoke(this, EventArgs.Empty);
-            Invoke(nameof(DestroyEnemy), 1f);
+            state = State.Dead;
         }
+        Debug.Log(state);
     }
 
     private void Patroling()
     {
-        if (!walkPointSet){
+        if (walkPointSet){
+            Walking();            
+        }else{
             SearchWalkPoint();
         }
+    }
 
-        if (walkPointSet){
-            onWalkAnimation?.Invoke(this, EventArgs.Empty);
-            agent.SetDestination(walkPoint);
-        }
+    private void Walking()
+    {
+        state = State.Walking;
+        Debug.Log("walking to point");
+        agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f){
+            Debug.Log("walk point reached");
+            state = State.Idle;
             walkPointSet = false;
-            onIdleAnimation?.Invoke(this, EventArgs.Empty);
         }
 
         lastActionDuration = Time.time;
-
-        // onWalkAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     private void SearchWalkPoint()
@@ -131,7 +171,6 @@ public class EnemyAction : MonoBehaviour
     {
         agent.SetDestination(playerTrans.position);
         lastActionDuration = Time.time;
-        onWalkAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     private void AttackPlayer()
@@ -146,7 +185,6 @@ public class EnemyAction : MonoBehaviour
             enemyAttack.Attack();
             ///End of attack code
 
-            onAttackAnimation?.Invoke(this, EventArgs.Empty);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
