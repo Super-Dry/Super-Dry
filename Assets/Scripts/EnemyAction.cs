@@ -48,6 +48,8 @@ public class EnemyAction : MonoBehaviour
         playerTargerPoint = GameObject.Find("TargetPoint");
         playerTargerPointTransform = playerTargerPoint.GetComponent<Transform>();
         enemyAttack = gameObject.GetComponent<IAttack>();
+
+
     }
 
     void Start()
@@ -62,18 +64,22 @@ public class EnemyAction : MonoBehaviour
         {
             if(fov.canSeePlayer && !fov.canAttackPlayer)
             {
+                Debug.Log("Chase");
                 ChasePlayer();
             }
             else if(fov.canSeePlayer && fov.canAttackPlayer)
             {
+                Debug.Log("attack");
                 AttackPlayer();
             }
             else if(!fov.canSeePlayer && Time.time > lastActionDuration + pauseTime)
             {
+                Debug.Log("Patroling");
                 Patroling();            
             }
             else{
-                onIdleAnimation?.Invoke(this, EventArgs.Empty); 
+                // onIdleAnimation?.Invoke(this, EventArgs.Empty);
+                // Debug.Log("onIdleAnimation");
                 return;
             }
         }
@@ -91,18 +97,21 @@ public class EnemyAction : MonoBehaviour
         }
 
         if (walkPointSet){
+            onWalkAnimation?.Invoke(this, EventArgs.Empty);
             agent.SetDestination(walkPoint);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f){
             walkPointSet = false;
+            onIdleAnimation?.Invoke(this, EventArgs.Empty);
+        }
 
         lastActionDuration = Time.time;
 
-        onWalkAnimation?.Invoke(this, EventArgs.Empty);
+        // onWalkAnimation?.Invoke(this, EventArgs.Empty);
     }
 
     private void SearchWalkPoint()
