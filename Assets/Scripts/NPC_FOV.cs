@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// using NPC_Interact;
 public class NPC_FOV : MonoBehaviour
 {
     public float radius;
@@ -13,6 +13,10 @@ public class NPC_FOV : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public bool canSeePlayer;
+    private bool isInteracting;
+    private string objectName;
+    private NPC_Interact interactive;
+
     //public bool canAttackPlayer;
 
     Animator anim;
@@ -20,6 +24,9 @@ public class NPC_FOV : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isInteracting = false;
+        objectName = gameObject.name;
+        interactive = transform.Find("ChatUI").GetComponent<NPC_Interact>();
         playerRef = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponent<Animator>();
         StartCoroutine(FOVRoutine());
@@ -72,8 +79,18 @@ public class NPC_FOV : MonoBehaviour
         }
         if(canSeePlayer){
     		anim.SetBool("isSpeaking", true);
+            if(!isInteracting)
+            {
+                isInteracting = true;
+                interactive.Interact(objectName);
+            }
     	}else{
     		anim.SetBool("isSpeaking", false);
+            if(isInteracting)
+            {
+                isInteracting = false;
+                interactive.Neglect();
+            }
     	}
     }
 }
