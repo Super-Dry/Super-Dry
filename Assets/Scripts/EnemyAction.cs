@@ -22,7 +22,6 @@ public class EnemyAction : MonoBehaviour
     private CactusGuy cactusGuy;
     private GameObject playerTargerPoint;
     private Transform playerTargerPointTransform;
-    private Rigidbody rigidbody;
     public LayerMask Ground;
     private State state;
 
@@ -60,7 +59,6 @@ public class EnemyAction : MonoBehaviour
         playerTargerPoint = GameObject.Find("TargetPoint");
         playerTargerPointTransform = playerTargerPoint.GetComponent<Transform>();
         enemyAttack = gameObject.GetComponent<IAttack>();
-        rigidbody = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -92,7 +90,6 @@ public class EnemyAction : MonoBehaviour
                 onAttackAnimation?.Invoke(this, EventArgs.Empty);
                 break;
             case State.Dead:
-                rigidbody.freezeRotation = true;
                 agent.SetDestination(transform.position);
                 onDeadAnimation?.Invoke(this, EventArgs.Empty);
                 Invoke(nameof(DestroyEnemy), 5f);
