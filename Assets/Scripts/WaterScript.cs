@@ -20,9 +20,9 @@ public class WaterScript : MonoBehaviour
 
             var player = c.gameObject.GetComponent<CactusGuy>();
             _time += Time.deltaTime;
-            // Debug.Log(_time);
+
             if(_time >= _interval){
-                if(totalShieldPointsRemaining > 0){
+                if(totalShieldPointsRemaining > 0 && player.currentShield < 100){
                     int shieldPointsToHeal = 1;
                     Debug.Log("healing!");
                     Debug.Log("Remaining water in pool: " + totalShieldPointsRemaining);
