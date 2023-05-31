@@ -7,6 +7,8 @@ public class Gate : MonoBehaviour
     [SerializeField] private Transform LeftHinge;
     [SerializeField] private Transform RightHinge;
     [SerializeField] private float duration; 
+    [SerializeField] private BoxCollider boxCollider;
+
     private bool rotating;
     public Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator> ();
 
@@ -14,6 +16,8 @@ public class Gate : MonoBehaviour
     {
         LeftHinge = GameObject.Find("LeftHinge").GetComponent<Transform>();
         RightHinge = GameObject.Find("RightHinge").GetComponent<Transform>();
+        boxCollider = GetComponent<BoxCollider>();
+        boxCollider.enabled = false;
     }
 
     void Start()
@@ -27,6 +31,7 @@ public class Gate : MonoBehaviour
         {
             while (coroutineQueue.Count >0)
                 yield return StartCoroutine(coroutineQueue.Dequeue());
+            boxCollider.enabled = false;
             yield return null;
         }
     }
@@ -59,6 +64,7 @@ public class Gate : MonoBehaviour
 
     public IEnumerator Close()
     {
+        boxCollider.enabled = true;
         if (rotating)
         {
             yield break;
@@ -77,7 +83,7 @@ public class Gate : MonoBehaviour
             counter += Time.deltaTime;
             LeftHinge.transform.eulerAngles = Vector3.Lerp(LeftCurrentRot, LeftNewRot, counter / duration);
             RightHinge.transform.eulerAngles = Vector3.Lerp(RightCurrentRot, RightNewRot, counter / duration);
-
+            
             yield return null;
         }
         rotating = false;
