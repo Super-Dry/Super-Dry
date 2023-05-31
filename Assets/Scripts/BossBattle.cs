@@ -18,6 +18,7 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private EnemySpawn pfEnemyCactusSpawn;
     [SerializeField] private GameObject boss;
     [SerializeField] private EnemyHealth enemyHealth;
+    [SerializeField] private WizardMain wizardMain;
     [SerializeField] private float enemySpawnRate;
     [SerializeField] private float maxEnemyAlive;
 
@@ -58,9 +59,9 @@ public class BossBattle : MonoBehaviour
     {
         Debug.Log("Boss battle started!");
         StartNextStage();
-        boss.GetComponent<EnemySpawn>().Spawn();
+        wizardMain.Spawn();
        
-        InvokeRepeating("SpawnEnemy", 0.5f, enemySpawnRate);
+        InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
     }
 
     private void StartNextStage() {

@@ -5,34 +5,38 @@ using UnityEngine;
 public class TornadoScript : MonoBehaviour
 {
     [SerializeField] private ParticleSystem tornado;
-    protected bool letPlay = true;
+    [SerializeField] private AudioSource audioSource;
+    protected bool letPlay = false;
 
     void Awake()
     {
         tornado = GetComponent<ParticleSystem>();
-        // gameObject.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
+        tornado.Stop();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void tornadoSwitch()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            letPlay = !letPlay;
-        }
-    
+        letPlay = !letPlay;
+        tornadoStartStop();
+    }
+
+    void tornadoStartStop()
+    {
         if(letPlay)
         {
             if(!tornado.isPlaying)
             {
+                audioSource.Play();
                 tornado.Play();
             }
         }else{
             if(tornado.isPlaying)
-            {
+            {   
+                audioSource.Stop();
                 tornado.Stop();
             }
         }
-        
     }
 }
