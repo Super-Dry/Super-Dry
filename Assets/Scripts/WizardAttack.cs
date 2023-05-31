@@ -1,28 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WizardAttack : MonoBehaviour, IAttack
 {
+    [SerializeField] private TornadoScript tornado;
+    // [SerializeField] private GameObject shootPointObj;
+    [SerializeField] private GameObject playerTargerPointObj;
+    [SerializeField] private Transform playerTargerPoint;
+    [SerializeField] private Transform playerTrans;
+    [SerializeField] private float tornadoSpeed;
     [SerializeField] private int m_damage;
-    [SerializeField] private CactusGuy cactusGuy;
     [SerializeField] public int damage
     {
         get{return m_damage;}
         set{damage = damage;}
     }
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        // shootPoint = transform.Find("ShootPoint").GetComponent<Transform>();
+        playerTargerPoint = GameObject.FindGameObjectWithTag("PlayerTargetPoint").GetComponent<Transform>();
+        playerTrans = GameObject.FindWithTag("Player").GetComponent<Transform>();
     }
 
     public void Attack()
     {
-        GameObject bulletObj = Instantiate(bullet, shootPoint.position, Quaternion.identity);
-        Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
-        bulletObj.transform.forward = shootingDirection.normalized;
-        bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
+        TornadoScript tornadoObj = Instantiate(tornado, transform.position, Quaternion.identity) as TornadoScript;
+        tornadoObj.tornado.Play();
+        Vector3 shootingDirection = playerTargerPoint.transform.position - transform.position;
+        tornadoObj.transform.forward = shootingDirection.normalized;
+        tornadoObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * tornadoSpeed, ForceMode.Impulse);
     }
 }

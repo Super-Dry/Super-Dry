@@ -24,7 +24,7 @@ public class BossBattle : MonoBehaviour
 
     private List<Vector3> spawnPositionList;
     private List<EnemySpawn> enemySpawnList;
-    private Stage stage;
+    public Stage stage;
 
     public event EventHandler bossBattleOver;
     

@@ -7,7 +7,7 @@ public class WizardMain : MonoBehaviour
 {
     [SerializeField] private TornadoScript tornado;
     [SerializeField] private Animator animator;
-    [SerializeField] private EnemyAction enemyAction;
+    [SerializeField] private WizardAction wizardAction;
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private NavMeshAgent navMeshAgent;
 
@@ -19,14 +19,16 @@ public class WizardMain : MonoBehaviour
         gameObject.SetActive(false);
         tornado = GameObject.Find("WizardTornadoBase").GetComponent<TornadoScript>();
         animator = GetComponent<Animator>();
-        enemyAction = GetComponent<EnemyAction>();
+        wizardAction = GetComponent<WizardAction>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        enemyAction.enabled = false;
+        wizardAction.enabled = false;
         skinnedMeshRenderer.enabled = false;
         navMeshAgent.enabled = false;
     }
+
+    
 
     public void Spawn()
     {
@@ -43,6 +45,7 @@ public class WizardMain : MonoBehaviour
         yield return new WaitForSeconds(6);
 
         skinnedMeshRenderer.enabled = true;
+        wizardAction.enabled = true;
         animator.SetBool("isAttack", true);
         animator.SetBool("isWalk", false);
         animator.SetBool("isIdle", false);
