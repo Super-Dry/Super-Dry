@@ -63,23 +63,6 @@ public class WizardAction : MonoBehaviour
             onAttackAnimation?.Invoke(this, EventArgs.Empty);
         }else if(bossBattle.stage == BossBattle.Stage.Stage_2){
             onAttackAnimation?.Invoke(this, EventArgs.Empty);
-            // switch (state){
-            //     case State.Idle:
-            //         onIdleAnimation?.Invoke(this, EventArgs.Empty);
-            //         break;
-            //     case State.Attacking:
-            //         AttackPlayer();
-            //         onAttackAnimation?.Invoke(this, EventArgs.Empty);
-            //         break;
-            //     case State.Dead:
-            //         // agent.SetDestination(transform.position);
-            //         onDeadAnimation?.Invoke(this, EventArgs.Empty);
-            //         Invoke(nameof(DestroyEnemy), 5f);
-            //         break;
-            //     default:
-            //         state = State.Idle;
-            //         break;    
-            // }
         }else if(bossBattle.stage == BossBattle.Stage.Stage_3){
             AttackPlayer();
             onAttackAnimation?.Invoke(this, EventArgs.Empty);
