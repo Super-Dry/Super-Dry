@@ -25,41 +25,56 @@ public class WizardMain : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
 
-        wizardAction.enabled = false;
         skinnedMeshRenderer.enabled = false;
         navMeshAgent.enabled = false;
         enemyHealth.cantBeDamage = true;
         enemyHealth.healthbar.gameObject.SetActive(false);
-        bossBattle.stage2Start += BossBattle_Stage2Start;
     }
 
-    void BossBattle_Stage2Start(object sender, EventArgs e)
+    public void Stage2Start()
     {
-        bossBattle.stage2Start -= BossBattle_Stage2Start;
-        StartCoroutine(stage2StartSequence());       
+        StartCoroutine(stage2StartPrologue());
     }
 
-    public void Spawn()
+    public void Stage1Start()
     {
         gameObject.SetActive(true);
-        StartCoroutine(spawnSequence());
+        StartCoroutine(stage1StartPrologue());
     }
 
-    IEnumerator stage2StartSequence()
+    IEnumerator moveWizardUp()
+    {
+        float elapsedTime = 0;
+        Vector3 startingPos = transform.position;
+        Vector3 end = transform.position + new Vector3(0, 2.5f, 0);
+
+        while (elapsedTime < 5)
+        {
+            transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / 5));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+    
+    IEnumerator stage2StartPrologue()
     { 
         enemyHealth.cantBeDamage = true;
-        
+        enemyHealth.healthbar.gameObject.SetActive(false);
+                
         // Start tornado base
         tornado.tornadoSwitch();
+        StartCoroutine(moveWizardUp());    
 
         // Wait for tornado warm up
         yield return new WaitForSeconds(6);
+
+        bossBattle.StartNextStage();
 
         yield return null;
     }
 
 
-    IEnumerator spawnSequence()
+    IEnumerator stage1StartPrologue()
     {
         // Start tornado base
         tornado.tornadoSwitch();
@@ -81,9 +96,9 @@ public class WizardMain : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         // Start wizard action
-        wizardAction.enabled = true;
         enemyHealth.healthbar.gameObject.SetActive(true);
         enemyHealth.cantBeDamage = false;
+        bossBattle.StartNextStage();
 
         yield return null;
     }

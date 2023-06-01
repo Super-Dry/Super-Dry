@@ -35,6 +35,7 @@ public class WizardAction : MonoBehaviour
 
     //Animation
     public event EventHandler onAttackAnimation;
+    public event EventHandler onIdleAnimation;
     public event EventHandler onDeadAnimation;
 
     void Awake()
@@ -58,10 +59,13 @@ public class WizardAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(bossBattle.stage == BossBattle.Stage.Stage_1){
-            AttackPlayer();
+        if(bossBattle.stage == BossBattle.Stage.Spawning || bossBattle.stage == BossBattle.Stage.Transitioning){
+            transform.LookAt(playerTargerPointTransform);
             onAttackAnimation?.Invoke(this, EventArgs.Empty);
+        }else if(bossBattle.stage == BossBattle.Stage.Stage_1){
+            AttackPlayer();
         }else if(bossBattle.stage == BossBattle.Stage.Stage_2){
+            transform.LookAt(playerTargerPointTransform);
             onAttackAnimation?.Invoke(this, EventArgs.Empty);
         }else if(bossBattle.stage == BossBattle.Stage.Stage_3){
             AttackPlayer();
@@ -76,18 +80,20 @@ public class WizardAction : MonoBehaviour
 
     private void AttackPlayer()
     {
-        // agent.SetDestination(transform.position);
         temp = new Vector3 (playerTargerPointTransform.position.x, transform.position.y, playerTargerPointTransform.position.z);
         transform.LookAt(temp);
 
         if (!alreadyAttacked)
-        {
+        {           
             // Attack code here
+            onAttackAnimation?.Invoke(this, EventArgs.Empty);
             enemyAttack.Attack();
             ///End of attack code
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }else{
+            onIdleAnimation?.Invoke(this, EventArgs.Empty);
         }
     }
 

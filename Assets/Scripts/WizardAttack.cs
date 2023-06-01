@@ -44,6 +44,8 @@ public class WizardAttack : MonoBehaviour, IAttack
 
     IEnumerator stage1AttackRoutine()
     {
+        yield return new WaitForSeconds(1.6f);
+
         TornadoScript tornadoObj = Instantiate(tornado, transform.position, Quaternion.identity) as TornadoScript;
         tornadoObj.tornado.Play();
         tornadoObj.audioSource.Play();

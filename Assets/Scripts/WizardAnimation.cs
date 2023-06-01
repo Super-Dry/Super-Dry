@@ -22,8 +22,18 @@ public class WizardAnimation : MonoBehaviour
     void Start()
     {
         wizardAction.onAttackAnimation += animatedEnemyAction_onAttackAnimation;
+        wizardAction.onIdleAnimation += animatedEnemyAction_onIdleAnimation;
         wizardAction.onDeadAnimation += animatedEnemyAction_onDeadAnimation;
         enemyHealth.onHitAnimation += animatedEnemyAction_onHitAnimation;
+    }
+
+    private void animatedEnemyAction_onIdleAnimation(object sender, EventArgs e)
+    {
+        anim.SetBool("isIdle", true);
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isHit", false);
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isDead", false);
     }
 
     private void animatedEnemyAction_onHitAnimation(object sender, EventArgs e)
@@ -47,8 +57,8 @@ public class WizardAnimation : MonoBehaviour
     private void animatedEnemyAction_onAttackAnimation(object sender, EventArgs e)
     {
         anim.SetBool("isAttack", true);
-        anim.SetBool("isWalk", false);
         anim.SetBool("isIdle", false);
+        anim.SetBool("isWalk", false);
         anim.SetBool("isHit", false);
         anim.SetBool("isDead", false);
     }

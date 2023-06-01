@@ -8,6 +8,8 @@ public class BossBattle : MonoBehaviour
     public enum Stage
     {
         WaitingToStart,
+        Spawning,
+        Transitioning,
         Stage_1,
         Stage_2,
         Stage_3,
@@ -27,7 +29,6 @@ public class BossBattle : MonoBehaviour
     private List<EnemySpawn> enemySpawnList;
     public Stage stage;
 
-    public event EventHandler stage2Start;
     public event EventHandler bossBattleOver;
     
     void Awake()
@@ -60,21 +61,27 @@ public class BossBattle : MonoBehaviour
     private void StartBattle()
     {
         Debug.Log("Boss battle started!");
-        StartNextStage();
-        wizardMain.Spawn();
+        StartNextStage();       
        
         InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
     }
 
-    private void StartNextStage() {
+    public void StartNextStage() {
         switch (stage) {
             case Stage.WaitingToStart:
+                stage = Stage.Spawning;
+                wizardMain.Stage1Start();
+                break;
+            case Stage.Spawning:
                 stage = Stage.Stage_1;
                 break;
             case Stage.Stage_1:
-                stage = Stage.Stage_2;
-                stage2Start?.Invoke(this, EventArgs.Empty);
+                stage = Stage.Transitioning;
+                wizardMain.Stage2Start();
                 break;
+            case Stage.Transitioning:
+                stage = Stage.Stage_2;
+                break;   
             case Stage.Stage_2:
                 stage = Stage.Stage_3;
                 break;
