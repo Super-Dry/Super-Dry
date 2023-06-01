@@ -91,53 +91,6 @@ public class WizardAction : MonoBehaviour
         }
     }
 
-
-    // private void Patroling()
-    // {
-    //     if (walkPointSet){
-    //         Walking();            
-    //     }else{
-    //         SearchWalkPoint();
-    //     }
-    // }
-
-    // private void Walking()
-    // {
-    //     state = State.Walking;
-    //     // Debug.Log("walking to point");
-    //     agent.SetDestination(walkPoint);
-
-    //     Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-    //     //Walkpoint reached
-    //     if (distanceToWalkPoint.magnitude < 1f){
-    //         // Debug.Log("walk point reached");
-    //         state = State.Idle;
-    //         walkPointSet = false;
-    //     }
-
-    //     lastActionDuration = Time.time;
-    // }
-
-    // private void SearchWalkPoint()
-    // {
-    //     //Calculate random point in range
-    //     float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
-    //     float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
-
-    //     walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-    //     if (Physics.Raycast(walkPoint, -transform.up, 2f, Ground))
-    //         walkPointSet = true;
-    // }
-
-
-    // private void ChasePlayer()
-    // {
-    //     agent.SetDestination(playerTrans.position);
-    //     lastActionDuration = Time.time;
-    // }
-
     private void AttackPlayer()
     {
         // agent.SetDestination(transform.position);
