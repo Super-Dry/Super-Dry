@@ -14,7 +14,6 @@ public class WizardMain : MonoBehaviour
     [SerializeField] private EnemyHealth enemyHealth;
     [SerializeField] private BossBattle bossBattle;
 
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -55,7 +54,7 @@ public class WizardMain : MonoBehaviour
 
         // Wait for tornado warm up
         yield return new WaitForSeconds(6);
-        
+
         yield return null;
     }
 
