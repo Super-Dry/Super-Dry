@@ -67,7 +67,6 @@ public class EnemyAction : MonoBehaviour
         lastActionDuration = Time.time;
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (state){
