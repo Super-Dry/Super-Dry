@@ -641,9 +641,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fac9e2b45029b54f82185e8d66521ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 12
-  angle: 85
-  attackRange: 7
+  radius: 50
+  angle: 360
+  attackRange: 10
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -666,11 +666,11 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
-  pauseTime: 2
+  pauseTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 3
   temp: {x: 0, y: 0, z: 0}
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 3
   enemyHealth: {fileID: 0}
 --- !u!114 &5591954060217247060
 MonoBehaviour:
@@ -716,5 +716,5 @@ MonoBehaviour:
   shootPoint: {fileID: 0}
   playerTargerPointObj: {fileID: 0}
   playerTargerPoint: {fileID: 0}
-  bulletSpeed: 30
+  bulletSpeed: 40
   m_damage: 5

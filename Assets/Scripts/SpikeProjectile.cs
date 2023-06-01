@@ -5,7 +5,6 @@ using System;
 
 public class SpikeProjectile : MonoBehaviour
 {
-
     void OnCollisionEnter(Collision collision)
     {
         EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();

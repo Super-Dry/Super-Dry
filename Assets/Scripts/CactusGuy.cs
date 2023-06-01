@@ -27,8 +27,16 @@ public class CactusGuy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if(shieldbar.slider.value > 0){
-            currentShield -= damage;
-            shieldbar.SetSield(currentShield);
+            if(shieldbar.slider.value < damage){
+                int carryOver = (int)(damage - shieldbar.slider.value);
+                currentShield = 0;
+                shieldbar.SetSield(currentShield);
+                currentHealth -= carryOver;
+                healthbar.SetHealth(currentHealth);
+            }else{
+                currentShield -= damage;
+                shieldbar.SetSield(currentShield);
+            }
         }
         else
         {

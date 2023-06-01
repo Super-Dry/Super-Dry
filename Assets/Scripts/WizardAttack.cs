@@ -29,8 +29,13 @@ public class WizardAttack : MonoBehaviour, IAttack
     {
         TornadoScript tornadoObj = Instantiate(tornado, transform.position, Quaternion.identity) as TornadoScript;
         tornadoObj.tornado.Play();
-        Vector3 shootingDirection = playerTargerPoint.transform.position - transform.position;
-        tornadoObj.transform.forward = shootingDirection.normalized;
+        tornadoObj.audioSource.Play();
+
+        Vector3 shootingDirection = playerTrans.transform.position - transform.position;
+        tornadoObj.transform.right = shootingDirection.normalized;
         tornadoObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * tornadoSpeed, ForceMode.Impulse);
+        tornadoObj.transform.forward = Vector3.up;
+
+        Destroy(tornadoObj, 8f);
     }
 }

@@ -10,6 +10,7 @@ public class WizardMain : MonoBehaviour
     [SerializeField] private WizardAction wizardAction;
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private EnemyHealth enemyHealth;
 
 
  
@@ -22,10 +23,14 @@ public class WizardMain : MonoBehaviour
         wizardAction = GetComponent<WizardAction>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyHealth = GetComponent<EnemyHealth>();
+
 
         wizardAction.enabled = false;
         skinnedMeshRenderer.enabled = false;
         navMeshAgent.enabled = false;
+        enemyHealth.cantBeDamage = true;
+        enemyHealth.healthbar.gameObject.SetActive(false);
     }
 
     
@@ -45,12 +50,22 @@ public class WizardMain : MonoBehaviour
         yield return new WaitForSeconds(6);
 
         skinnedMeshRenderer.enabled = true;
-        wizardAction.enabled = true;
         animator.SetBool("isAttack", true);
         animator.SetBool("isWalk", false);
         animator.SetBool("isIdle", false);
         animator.SetBool("isHit", false);
         animator.SetBool("isDead", false);
+        
+        // Stop tornado base
+        tornado.tornadoSwitch();
+
+        // Wait for tornado clear up
+        yield return new WaitForSeconds(4);
+
+        // Start wizard action
+        wizardAction.enabled = true;
+        enemyHealth.healthbar.gameObject.SetActive(true);
+        enemyHealth.cantBeDamage = false;
 
         yield return null;
     }

@@ -11,6 +11,7 @@ TagManager:
   - VillageTrigger
   - ShootPoint
   - PlayerTargetPoint
+  - Wizard
   layers:
   - Default
   - TransparentFX
