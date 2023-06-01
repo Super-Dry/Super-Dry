@@ -22,10 +22,12 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private float enemySpawnRate;
     [SerializeField] private float maxEnemyAlive;
 
+
     private List<Vector3> spawnPositionList;
     private List<EnemySpawn> enemySpawnList;
     public Stage stage;
 
+    public event EventHandler stage2Start;
     public event EventHandler bossBattleOver;
     
     void Awake()
@@ -71,6 +73,7 @@ public class BossBattle : MonoBehaviour
                 break;
             case Stage.Stage_1:
                 stage = Stage.Stage_2;
+                stage2Start?.Invoke(this, EventArgs.Empty);
                 break;
             case Stage.Stage_2:
                 stage = Stage.Stage_3;
@@ -89,7 +92,7 @@ public class BossBattle : MonoBehaviour
                 }
                 break;
             case Stage.Stage_2:
-                if (enemyHealth.GetHealthNormalized() <= .3f){
+                if (enemyHealth.GetHealthNormalized() <= .4f){
                     StartNextStage();
                 }
                 break;    

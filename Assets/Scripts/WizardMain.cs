@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,9 @@ public class WizardMain : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private EnemyHealth enemyHealth;
+    [SerializeField] private BossBattle bossBattle;
 
 
- 
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,21 +26,39 @@ public class WizardMain : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
 
-
         wizardAction.enabled = false;
         skinnedMeshRenderer.enabled = false;
         navMeshAgent.enabled = false;
         enemyHealth.cantBeDamage = true;
         enemyHealth.healthbar.gameObject.SetActive(false);
+        bossBattle.stage2Start += BossBattle_Stage2Start;
     }
 
-    
+    void BossBattle_Stage2Start(object sender, EventArgs e)
+    {
+        bossBattle.stage2Start -= BossBattle_Stage2Start;
+        StartCoroutine(stage2StartSequence());       
+    }
 
     public void Spawn()
     {
         gameObject.SetActive(true);
         StartCoroutine(spawnSequence());
     }
+
+    IEnumerator stage2StartSequence()
+    { 
+        enemyHealth.cantBeDamage = true;
+        
+        // Start tornado base
+        tornado.tornadoSwitch();
+
+        // Wait for tornado warm up
+        yield return new WaitForSeconds(6);
+        
+        yield return null;
+    }
+
 
     IEnumerator spawnSequence()
     {

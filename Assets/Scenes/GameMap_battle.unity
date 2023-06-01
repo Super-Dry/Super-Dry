@@ -12650,7 +12650,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6429699825253550102}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -17311,6 +17311,7 @@ MonoBehaviour:
   skinnedMeshRenderer: {fileID: 0}
   navMeshAgent: {fileID: 0}
   enemyHealth: {fileID: 0}
+  bossBattle: {fileID: 1978835264}
 --- !u!114 &6429699825253550104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17327,6 +17328,7 @@ MonoBehaviour:
   playerTargerPointObj: {fileID: 692160217}
   playerTargerPoint: {fileID: 692160218}
   playerTrans: {fileID: 5234238465875125670}
+  bossBattle: {fileID: 1978835264}
   tornadoSpeed: 60
   m_damage: 20
 --- !u!114 &6429699825253550105
@@ -17344,11 +17346,8 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
-  pauseTime: 0
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 0
   temp: {x: 0, y: 0, z: 0}
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 4
   enemyHealth: {fileID: 0}
   bossBattle: {fileID: 1978835264}
 --- !u!114 &6429699825253550106
