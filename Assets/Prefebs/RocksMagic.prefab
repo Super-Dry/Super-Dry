@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 3289966528166640304}
   - component: {fileID: 4980464867171117153}
   - component: {fileID: 3289966528166640311}
+  - component: {fileID: 4443612777381103436}
   m_Layer: 7
   m_Name: RocksMagic
   m_TagString: Untagged
@@ -134,6 +135,7 @@ Transform:
   - {fileID: 4855901505076120195}
   - {fileID: 2070016544267291538}
   - {fileID: 5454366845121094180}
+  - {fileID: 7621681578842412029}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.515, y: -82.486, z: 0.589}
@@ -152,6 +154,11 @@ MonoBehaviour:
   rockGlowMaterial: {fileID: 2100000, guid: 16eef828f52b96244a72c311a8c62ec7, type: 2}
   rockMaterial: {fileID: 2100000, guid: 9c4f53c1d4f27f94fafe5e5b27da9d08, type: 2}
   meshRenderer: {fileID: 0}
+  tornadoSupply: {fileID: 0}
+  shootPoint: {fileID: 0}
+  target: {fileID: 0}
+  supplySpead: 0
+  destoryTime: 0
 --- !u!114 &3289966528166640311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,9 +171,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ec8e59ecd04fe4fa66e44574d349d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 150
   currentHealth: 0
-  healthbar: {fileID: 0}
+  healthbar: {fileID: 4980464868161608941}
+--- !u!65 &4443612777381103436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802258820036583434}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1.95, z: 0.78}
+  m_Center: {x: -12.14, y: 1, z: 0.1}
 --- !u!1 &4290507141623377158
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,3 +951,34 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5481270621755539314, guid: c2f79e21e006fba4c8c77c508b688343, type: 3}
+--- !u!1 &7890820353631826489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7621681578842412029}
+  m_Layer: 0
+  m_Name: Shootpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7621681578842412029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7890820353631826489}
+  m_LocalRotation: {x: 0.000005856966, y: 0.6592549, z: -0.006827663, w: 0.7518885}
+  m_LocalPosition: {x: -12.111, y: 2.279, z: 0.16}
+  m_LocalScale: {x: 1, y: 1, z: 0.9999999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3289966528166640304}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

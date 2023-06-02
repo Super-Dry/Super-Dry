@@ -8,6 +8,14 @@ public class RockScript : MonoBehaviour
     [SerializeField] private Material rockGlowMaterial;
     [SerializeField] private Material rockMaterial;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private EnemyHealth enemyHealth;
+    [SerializeField] private GameObject tornadoSupply;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private Transform target;
+    [SerializeField] private float supplySpead;
+    [SerializeField] private float destoryTime;
+
+    public event EventHandler rockDestoryed;
 
     private bool glow = false;
 
@@ -15,8 +23,19 @@ public class RockScript : MonoBehaviour
     void Start()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        enemyHealth.cantBeDamage = true;
+        enemyHealth.healthbar.gameObject.SetActive(false);
     }
-    
+
+    void Update()
+    {
+        if(enemyHealth.IsDead())
+        {
+            DestroyRock();
+        }
+    }
+
     public void rockSwitch()
     {
         glow = !glow;
@@ -28,8 +47,27 @@ public class RockScript : MonoBehaviour
         if(glow)
         {
             meshRenderer.material = rockGlowMaterial; 
+            InvokeRepeating("supply", 3f, 1f);
         }else{
-            meshRenderer.material = rockMaterial;            
+            CancelInvoke();            
+            meshRenderer.material = rockMaterial;
         }
     }
+
+    void supply()
+    {
+        GameObject tornadoObj = Instantiate(tornadoSupply, shootPoint.position, Quaternion.identity);
+        Vector3 shootingDirection = target.transform.position - shootPoint.position + new Vector3(0, 3, 0);
+        tornadoObj.transform.forward = shootingDirection.normalized;
+        tornadoObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * supplySpead, ForceMode.Impulse);
+        Destroy(tornadoObj, destoryTime);
+    }
+
+    private void DestroyRock()
+    {
+        Destroy(gameObject);
+        rockDestoryed?.Invoke(this, EventArgs.Empty);
+    }
+
+
 }

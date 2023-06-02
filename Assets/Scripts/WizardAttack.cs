@@ -29,11 +29,13 @@ public class WizardAttack : MonoBehaviour, IAttack
 
     public void Attack()
     {
-        if(bossBattle.stage == BossBattle.Stage.Stage_1){
-            StartCoroutine(stage1AttackRoutine());
-        }else if(bossBattle.stage == BossBattle.Stage.Stage_3){
-            StartCoroutine(stage3AttackRoutine());
-        }        
+        StartCoroutine(stage1AttackRoutine());
+
+        // if(bossBattle.stage == BossBattle.Stage.Stage_1){
+        //     StartCoroutine(stage1AttackRoutine());
+        // }else if(bossBattle.stage == BossBattle.Stage.Stage_3){
+        //     StartCoroutine(stage3AttackRoutine());
+        // }        
     }
 
     IEnumerator stage3AttackRoutine()

@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 5939806910869996626}
   m_Layer: 12
   m_Name: ProjectileObj
-  m_TagString: Untagged
+  m_TagString: NeedToDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,3 +173,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d34259b3675e94abd4b25eac6c39ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}

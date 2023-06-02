@@ -38,7 +38,12 @@ public class WizardMain : MonoBehaviour
         StartCoroutine(stage2StartPrologue());
     }
 
-    public void Stage1Start()
+    public void Stage4Start()
+    {
+        StartCoroutine(stage4StartPrologue());
+    }
+
+    public void Spawn()
     {
         gameObject.SetActive(true);
         StartCoroutine(stage1StartPrologue());
@@ -57,6 +62,20 @@ public class WizardMain : MonoBehaviour
             yield return null;
         }
     }
+
+    IEnumerator moveWizardDown()
+    {
+        float elapsedTime = 0;
+        Vector3 startingPos = transform.position;
+        Vector3 end = transform.position + new Vector3(0, -2.5f, 0);
+
+        while (elapsedTime < 5)
+        {
+            transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / 5));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
     
     IEnumerator stage2StartPrologue()
     { 
@@ -65,18 +84,80 @@ public class WizardMain : MonoBehaviour
                 
         // Start tornado base
         tornado.tornadoSwitch();
+
+        // Move up wizard
         StartCoroutine(moveWizardUp());
+
+        // Light up both rock
         leftRock.rockSwitch();
-        rightRock.rockSwitch();    
+        // rightRock.rockSwitch();
 
         // Wait for tornado warm up
         yield return new WaitForSeconds(6);
 
-        bossBattle.StartNextStage();
+        leftRock.GetComponent<EnemyHealth>().cantBeDamage = false;    
+        // rightRock.GetComponent<EnemyHealth>().cantBeDamage = false; 
+        leftRock.GetComponent<EnemyHealth>().healthbar.gameObject.SetActive(true);   
+        // rightRock.GetComponent<EnemyHealth>().healthbar.gameObject.SetActive(true);
+        leftRock.rockDestoryed += RockDestoryed;
+        // rightRock.rockDestoryed += RockDestoryed;
+
+        bossBattle.StartNextStage(); // Start stage 2
 
         yield return null;
     }
 
+    IEnumerator stage4StartPrologue()
+    { 
+        enemyHealth.cantBeDamage = true;
+        enemyHealth.healthbar.gameObject.SetActive(false);
+                
+        // Start tornado base
+        tornado.tornadoSwitch();
+
+        // Move up wizard
+        StartCoroutine(moveWizardUp());
+
+        // Light up rock
+        // leftRock.rockSwitch();
+        rightRock.rockSwitch();
+
+        // Wait for tornado warm up
+        yield return new WaitForSeconds(6);
+
+        // leftRock.GetComponent<EnemyHealth>().cantBeDamage = false;    
+        rightRock.GetComponent<EnemyHealth>().cantBeDamage = false; 
+        // leftRock.GetComponent<EnemyHealth>().healthbar.gameObject.SetActive(true);   
+        rightRock.GetComponent<EnemyHealth>().healthbar.gameObject.SetActive(true);
+        // leftRock.rockDestoryed += RockDestoryed;
+        rightRock.rockDestoryed += RockDestoryed;
+
+        bossBattle.StartNextStage(); // Start stage 4
+
+        yield return null;
+    }
+
+    private void RockDestoryed(object sender, EventArgs e)
+    {
+        leftRock.rockDestoryed -= RockDestoryed;
+        StartCoroutine(RockDestoryedNextStage());
+    }
+
+    IEnumerator RockDestoryedNextStage()
+    { 
+        // Stop tornado base
+        tornado.tornadoSwitch();
+
+        // Move down wizard
+        StartCoroutine(moveWizardDown());
+        
+        // Wait for tornado stop
+        yield return new WaitForSeconds(6);
+
+        enemyHealth.cantBeDamage = false;
+        enemyHealth.healthbar.gameObject.SetActive(true);
+        bossBattle.StartNextStage();
+    }
 
     IEnumerator stage1StartPrologue()
     {
@@ -102,7 +183,7 @@ public class WizardMain : MonoBehaviour
         // Start wizard action
         enemyHealth.healthbar.gameObject.SetActive(true);
         enemyHealth.cantBeDamage = false;
-        bossBattle.StartNextStage();
+        bossBattle.StartNextStage();    // Start stage 1
 
         yield return null;
     }

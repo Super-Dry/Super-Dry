@@ -12,6 +12,7 @@ TagManager:
   - ShootPoint
   - PlayerTargetPoint
   - Wizard
+  - NeedToDestroy
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Player
   - Player's projectile
   - Enemy's projectile
-  - 
+  - Wizard's projectile
   - 
   - 
   - 

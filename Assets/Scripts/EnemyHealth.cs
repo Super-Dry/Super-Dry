@@ -22,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
         healthbar.SetMaxHealth(maxHealth); 
         cantBeDamage = false;
     }
+    
 
     public void TakeDamage(int damage)
     {
