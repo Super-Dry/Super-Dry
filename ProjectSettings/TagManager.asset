@@ -13,6 +13,7 @@ TagManager:
   - PlayerTargetPoint
   - Wizard
   - NeedToDestroy
+  - Obstacle
   layers:
   - Default
   - TransparentFX

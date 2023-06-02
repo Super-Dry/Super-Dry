@@ -29,7 +29,10 @@ public class TornadoScript : MonoBehaviour
             Destroy(gameObject);
             // print("Player got hit by enemy");
             player.TakeDamage(wizardAttack.damage);
+        }else if(other.gameObject.tag == "Obstacle"){
+            Destroy(gameObject);
         }
+
     }
 
     public void tornadoSwitch()
