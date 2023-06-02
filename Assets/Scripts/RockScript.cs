@@ -9,36 +9,27 @@ public class RockScript : MonoBehaviour
     [SerializeField] private Material rockMaterial;
     [SerializeField] private MeshRenderer meshRenderer;
 
+    private bool glow = false;
+
     // Start is called before the first frame update
     void Start()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
-        
-
-    // Update is called once per frame
-    void Update()
+    
+    public void rockSwitch()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        glow = !glow;
+        rockGlow();
+    }
+
+    void rockGlow()
+    {
+        if(glow)
         {
-            change();
-        }else if(Input.GetKeyDown(KeyCode.E))
-        {
-            back();
+            meshRenderer.material = rockGlowMaterial; 
+        }else{
+            meshRenderer.material = rockMaterial;            
         }
-    }
-
-    private void back()
-    {
-        Material oldMaterial = meshRenderer.material;
-        Debug.Log(oldMaterial);
-        meshRenderer.material = rockMaterial;
-    }
-
-    void change()
-    {
-        Material oldMaterial = meshRenderer.material;
-        Debug.Log(oldMaterial);
-        meshRenderer.material = rockGlowMaterial;
     }
 }

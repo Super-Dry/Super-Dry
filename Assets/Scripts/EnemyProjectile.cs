@@ -29,5 +29,7 @@ public class EnemyProjectile : MonoBehaviour, IAttack
         Vector3 shootingDirection = playerTargerPoint.transform.position - shootPoint.position;
         bulletObj.transform.forward = shootingDirection.normalized;
         bulletObj.GetComponent<Rigidbody>().AddForce(shootingDirection.normalized * bulletSpeed, ForceMode.Impulse);
+        bulletObj.GetComponent<BulletScript>().parent = gameObject.GetComponent<EnemyProjectile>();
+
     }
 }

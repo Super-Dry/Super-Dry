@@ -13,6 +13,8 @@ public class WizardMain : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private EnemyHealth enemyHealth;
     [SerializeField] private BossBattle bossBattle;
+    [SerializeField] private RockScript leftRock;
+    [SerializeField] private RockScript rightRock;
 
     // Start is called before the first frame update
     void Awake()
@@ -63,7 +65,9 @@ public class WizardMain : MonoBehaviour
                 
         // Start tornado base
         tornado.tornadoSwitch();
-        StartCoroutine(moveWizardUp());    
+        StartCoroutine(moveWizardUp());
+        leftRock.rockSwitch();
+        rightRock.rockSwitch();    
 
         // Wait for tornado warm up
         yield return new WaitForSeconds(6);
