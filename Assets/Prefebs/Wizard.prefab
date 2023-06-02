@@ -2596,6 +2596,8 @@ MonoBehaviour:
   wizardAction: {fileID: 0}
   skinnedMeshRenderer: {fileID: 0}
   navMeshAgent: {fileID: 0}
+  enemyHealth: {fileID: 0}
+  bossBattle: {fileID: 0}
 --- !u!114 &8095629544794982316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2612,6 +2614,7 @@ MonoBehaviour:
   playerTargerPointObj: {fileID: 0}
   playerTargerPoint: {fileID: 0}
   playerTrans: {fileID: 0}
+  bossBattle: {fileID: 0}
   tornadoSpeed: 60
   m_damage: 20
 --- !u!114 &8095629544794982317
@@ -2629,9 +2632,6 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
-  pauseTime: 0
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 0
   temp: {x: 0, y: 0, z: 0}
   timeBetweenAttacks: 2
   enemyHealth: {fileID: 0}
