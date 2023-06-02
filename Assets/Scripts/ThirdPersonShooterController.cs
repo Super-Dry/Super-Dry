@@ -21,7 +21,8 @@ public class ThirdPersonShooterController : MonoBehaviour
     int bulletsShot;
 
     //bools
-    bool shooting, readyToShoot;
+    bool shooting;
+    public bool readyToShoot;
 
     //Reference
     public Camera cam;

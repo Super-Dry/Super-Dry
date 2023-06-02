@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
             onHitAnimation?.Invoke(this, EventArgs.Empty);
             if (currentHealth <= 0)
             {
-            onDead?.Invoke(this, EventArgs.Empty); 
+                onDead?.Invoke(this, EventArgs.Empty); 
             }
         }
     }

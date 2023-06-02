@@ -161,7 +161,7 @@ public class BossBattle : MonoBehaviour
         EnemySpawn pfEnemySpawn;
         int rand = UnityEngine.Random.Range(0, 100);
         pfEnemySpawn = pfEnemyCactusSpawn;                      // By default spawn enemy cactus
-        if (rand < 45) pfEnemySpawn = pfEnemyCapsuleSpawn;      // 45% chances of spawning enemy capsule
+        if (rand < 25) pfEnemySpawn = pfEnemyCapsuleSpawn;      // 25% chances of spawning enemy capsule
 
         NavMeshHit closestHit;
         if(NavMesh.SamplePosition(spawnPosition, out closestHit, 3f, NavMesh.AllAreas ) ){
@@ -170,9 +170,6 @@ public class BossBattle : MonoBehaviour
             enemySpawn.Spawn();
             enemySpawnList.Add(enemySpawn);
         }
-
-        // EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, spawnPosition, Quaternion.identity) as EnemySpawn;
-        // enemySpawn.Spawn();
     }
 
     private void DestroyAllEnemies()

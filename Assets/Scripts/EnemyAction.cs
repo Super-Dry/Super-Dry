@@ -91,7 +91,7 @@ public class EnemyAction : MonoBehaviour
             case State.Dead:
                 agent.SetDestination(transform.position);
                 onDeadAnimation?.Invoke(this, EventArgs.Empty);
-                Invoke(nameof(DestroyEnemy), 5f);
+                Invoke(nameof(DestroyEnemy), 3f);
                 break;
             default:
                 state = State.Idle;

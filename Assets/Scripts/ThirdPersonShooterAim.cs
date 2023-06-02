@@ -9,11 +9,6 @@ public class ThirdPersonShooterAim : MonoBehaviour
     [SerializeField] private CinemachineFreeLook aimVirtualCamera;
     bool Aiming;
     public bool allowButtonHold;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
