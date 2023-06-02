@@ -2598,6 +2598,8 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   enemyHealth: {fileID: 0}
   bossBattle: {fileID: 0}
+  leftRock: {fileID: 0}
+  rightRock: {fileID: 0}
 --- !u!114 &8095629544794982316
 MonoBehaviour:
   m_ObjectHideFlags: 0

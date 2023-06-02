@@ -154,6 +154,7 @@ MonoBehaviour:
   rockGlowMaterial: {fileID: 2100000, guid: 16eef828f52b96244a72c311a8c62ec7, type: 2}
   rockMaterial: {fileID: 2100000, guid: 9c4f53c1d4f27f94fafe5e5b27da9d08, type: 2}
   meshRenderer: {fileID: 0}
+  enemyHealth: {fileID: 0}
   tornadoSupply: {fileID: 0}
   shootPoint: {fileID: 0}
   target: {fileID: 0}
