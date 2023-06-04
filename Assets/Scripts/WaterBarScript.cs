@@ -23,7 +23,7 @@ public class WaterBarScript : MonoBehaviour
             transform.LookAt(target);
         }
 
-        Debug.Log("updating");
+        // Debug.Log("updating");
         slider.value = waterSource.GetComponent<WaterScript>().totalShieldPointsRemaining;
     }
 }

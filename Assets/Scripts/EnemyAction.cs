@@ -67,7 +67,6 @@ public class EnemyAction : MonoBehaviour
         lastActionDuration = Time.time;
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (state){
@@ -92,7 +91,7 @@ public class EnemyAction : MonoBehaviour
             case State.Dead:
                 agent.SetDestination(transform.position);
                 onDeadAnimation?.Invoke(this, EventArgs.Empty);
-                Invoke(nameof(DestroyEnemy), 5f);
+                Invoke(nameof(DestroyEnemy), 3f);
                 break;
             default:
                 state = State.Idle;
@@ -124,7 +123,7 @@ public class EnemyAction : MonoBehaviour
         {   // Enemy is dead
             state = State.Dead;
         }
-        Debug.Log(state);
+        // Debug.Log(state);
     }
 
     private void Patroling()
@@ -139,14 +138,14 @@ public class EnemyAction : MonoBehaviour
     private void Walking()
     {
         state = State.Walking;
-        Debug.Log("walking to point");
+        // Debug.Log("walking to point");
         agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f){
-            Debug.Log("walk point reached");
+            // Debug.Log("walk point reached");
             state = State.Idle;
             walkPointSet = false;
         }

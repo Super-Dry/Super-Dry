@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleSystem : MonoBehaviour
 {
@@ -106,7 +107,12 @@ public class BattleSystem : MonoBehaviour
         private void SpawnEnemies(){
             foreach(EnemySpawn enemySpawn in enemySpawnArray)
             {
-                enemySpawn.Spawn();
+                NavMeshHit closestHit;
+                if(NavMesh.SamplePosition(enemySpawn.transform.position, out closestHit, 3f, NavMesh.AllAreas ) ){
+                    enemySpawn.gameObject.transform.position = closestHit.position;
+                    enemySpawn.GetComponent<NavMeshAgent>().enabled = true;
+                    enemySpawn.Spawn();
+                }
             }
         }
 

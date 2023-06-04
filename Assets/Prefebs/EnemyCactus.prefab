@@ -490,7 +490,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572925684983213408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -517,8 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fac9e2b45029b54f82185e8d66521ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 12
-  angle: 85
+  radius: 50
+  angle: 360
   attackRange: 1
   playerRef: {fileID: 0}
   targetMask:
@@ -542,7 +542,7 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
-  pauseTime: 2
+  pauseTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 3
   temp: {x: 0, y: 0, z: 0}

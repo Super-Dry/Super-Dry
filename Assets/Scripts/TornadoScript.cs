@@ -1,38 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TornadoScript : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem tornado;
-    protected bool letPlay = true;
+    [SerializeField] public ParticleSystem tornado;
+    [SerializeField] public AudioSource audioSource;
+    [SerializeField] private WizardAttack wizardAttack;
+
+    protected bool letPlay = false;
 
     void Awake()
     {
         tornado = GetComponent<ParticleSystem>();
-        // gameObject.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+        wizardAttack = GameObject.FindWithTag("Wizard").GetComponent<WizardAttack>();
+        
+        audioSource.Stop();
+        tornado.Stop();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        CactusGuy player = other.gameObject.GetComponent<CactusGuy>();
+        if(player != null)
         {
-            letPlay = !letPlay;
+            Destroy(gameObject);
+            // print("Player got hit by enemy");
+            player.TakeDamage(wizardAttack.damage);
+        }else if(other.gameObject.tag == "Obstacle"){
+            Destroy(gameObject);
         }
-    
+
+    }
+
+    public void tornadoSwitch()
+    {
+        letPlay = !letPlay;
+        tornadoStartStop();
+    }
+
+    void tornadoStartStop()
+    {
         if(letPlay)
         {
             if(!tornado.isPlaying)
             {
+                audioSource.Play();
                 tornado.Play();
             }
         }else{
             if(tornado.isPlaying)
-            {
+            {   
+                audioSource.Stop();
                 tornado.Stop();
             }
         }
-        
     }
 }

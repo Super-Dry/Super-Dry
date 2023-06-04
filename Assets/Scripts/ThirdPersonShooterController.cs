@@ -4,6 +4,12 @@ public class ThirdPersonShooterController : MonoBehaviour
 {
     //bullet 
     public GameObject bullet;
+    [SerializeField] private int m_damage;
+    [SerializeField] public int damage
+    {
+        get{return m_damage;}
+        set{damage = damage;}
+    }
 
     //bullet force
     public float shootForce, upwardForce;
@@ -15,7 +21,8 @@ public class ThirdPersonShooterController : MonoBehaviour
     int bulletsShot;
 
     //bools
-    bool shooting, readyToShoot;
+    bool shooting;
+    public bool readyToShoot;
 
     //Reference
     public Camera cam;
@@ -89,6 +96,8 @@ public class ThirdPersonShooterController : MonoBehaviour
 
         //Instantiate bullet/projectile
         GameObject currentBullet = Instantiate(bullet, spawnPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
+        currentBullet.GetComponent<SpikeProjectile>().parent = gameObject.GetComponent<ThirdPersonShooterController>();
+
         //Rotate bullet to shoot direction
         currentBullet.transform.forward = directionWithSpread.normalized;
 

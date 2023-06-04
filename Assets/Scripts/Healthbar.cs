@@ -22,23 +22,4 @@ public class Healthbar : MonoBehaviour
     {
         slider.value = health;
     }
-
-    // [SerializeField] private Image _healthbarSprite;
-    // [SerializeField] private float _reduceSpeed = 2;
-    // private float _target = 1;
-
-    // private Camera _cam;
-
-    // void Start(){
-    //     _cam = Camera.main;
-    // }
-
-    // public void UpdateHealthBar(float maxHealth, float currentHealth){
-    //     _target = currentHealth / maxHealth;
-    // }
-
-    // void Update(){
-    //     transform.rotation = Quaternion.LookRotation(transform.position - _cam.transform.position);
-    //     _healthbarSprite.fillAmount = Mathf.MoveTowards(_healthbarSprite.fillAmount, _target, _reduceSpeed * Time.deltaTime);
-    // }
 }
