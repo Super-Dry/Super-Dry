@@ -3724,7 +3724,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418294756}
-  m_LocalRotation: {x: 0.048291225, y: 0.18295498, z: -0.008998043, w: 0.98189336}
+  m_LocalRotation: {x: 0.048291214, y: 0.18295498, z: -0.008998043, w: 0.98189336}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4258,6 +4258,10 @@ PrefabInstance:
       value: Big Vegas@Bellydancing
       objectReference: {fileID: 0}
     - target: {fileID: 5842846870327749987, guid: 2c96dd17aea771c499c08f5cfc14d6ec, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842846870327749987, guid: 2c96dd17aea771c499c08f5cfc14d6ec, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -4341,6 +4345,14 @@ PrefabInstance:
       propertyPath: playerRef
       value: 
       objectReference: {fileID: 4893179186851381020}
+    - target: {fileID: 6761204399790904710, guid: 2c96dd17aea771c499c08f5cfc14d6ec, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761204399790904711, guid: 2c96dd17aea771c499c08f5cfc14d6ec, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 6770047707470339787, guid: 2c96dd17aea771c499c08f5cfc14d6ec, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -6829,7 +6841,7 @@ GameObject:
   - component: {fileID: 799132842}
   m_Layer: 0
   m_Name: NPCs
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -7931,7 +7943,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948304457}
-  m_LocalRotation: {x: 0.048291214, y: 0.18295498, z: -0.008998043, w: 0.98189336}
+  m_LocalRotation: {x: 0.048291225, y: 0.18295498, z: -0.008998043, w: 0.98189336}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9910,6 +9922,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1302028693579787638, guid: 79ad7e054b3708344a7c3c2a7538f12d, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 1310874200984626059, guid: 79ad7e054b3708344a7c3c2a7538f12d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -9989,6 +10005,10 @@ PrefabInstance:
     - target: {fileID: 2220509787970162723, guid: 79ad7e054b3708344a7c3c2a7538f12d, type: 3}
       propertyPath: m_Name
       value: kaya@Nervously Look Around
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220509787970162723, guid: 79ad7e054b3708344a7c3c2a7538f12d, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 2220509787970162723, guid: 79ad7e054b3708344a7c3c2a7538f12d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16772,7 +16792,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881069358}
-  m_LocalRotation: {x: 0.0025993285, y: 0.50091016, z: -0.35667938, w: 0.78858227}
+  m_LocalRotation: {x: 0.0025993285, y: 0.5009101, z: -0.35667938, w: 0.7885823}
   m_LocalPosition: {x: -2.909524, y: 1.6190754, z: 6.619846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17115,7 +17135,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928508748}
-  m_LocalRotation: {x: 0.048291225, y: 0.18295498, z: -0.008998043, w: 0.98189336}
+  m_LocalRotation: {x: 0.048291214, y: 0.18295498, z: -0.008998043, w: 0.98189336}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
