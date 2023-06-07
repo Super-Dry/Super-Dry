@@ -54,7 +54,7 @@ public class CactusGuy : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
-            OnDeath();
+            // OnDeath();
         }
     }
 
