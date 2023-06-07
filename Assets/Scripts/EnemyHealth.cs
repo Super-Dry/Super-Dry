@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    [NonSerialized] public bool cantBeDamage;
 
     public Healthbar healthbar;
 
@@ -19,16 +20,20 @@ public class EnemyHealth : MonoBehaviour
         healthbar = GetComponentInChildren<Healthbar>();
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth); 
+        cantBeDamage = false;
     }
+    
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthbar.SetHealth(currentHealth);
-        onHitAnimation?.Invoke(this, EventArgs.Empty);
-        if (currentHealth <= 0)
-        {
-           onDead?.Invoke(this, EventArgs.Empty); 
+        if(!cantBeDamage){
+            currentHealth -= damage;
+            healthbar.SetHealth(currentHealth);
+            onHitAnimation?.Invoke(this, EventArgs.Empty);
+            if (currentHealth <= 0)
+            {
+                onDead?.Invoke(this, EventArgs.Empty); 
+            }
         }
     }
 

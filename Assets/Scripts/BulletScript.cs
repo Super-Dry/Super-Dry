@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {  
+    public EnemyProjectile parent;
+
     void OnCollisionStay(Collision collision)
     {
         CactusGuy player = collision.gameObject.GetComponent<CactusGuy>();
@@ -11,7 +13,7 @@ public class BulletScript : MonoBehaviour
         {
             Destroy(gameObject);
             // print("Player got hit by enemy");
-            player.TakeDamage(10);
+            player.TakeDamage(parent.damage);
         }else if(collision.gameObject.tag == "Ground"){
             Destroy(gameObject);
         }

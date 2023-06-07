@@ -11,6 +11,9 @@ TagManager:
   - VillageTrigger
   - ShootPoint
   - PlayerTargetPoint
+  - Wizard
+  - NeedToDestroy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -26,7 +29,7 @@ TagManager:
   - Player
   - Player's projectile
   - Enemy's projectile
-  - 
+  - Wizard's projectile
   - 
   - 
   - 

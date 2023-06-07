@@ -7,7 +7,7 @@ public class BattleTrigger : MonoBehaviour
 {
     public event EventHandler OnPlayerEnterTrigger;
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerStay(Collider collider)
     {
         CactusGuy player = collider.GetComponent<CactusGuy>();
         if (player != null)

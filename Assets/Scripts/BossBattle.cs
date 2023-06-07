@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System;
 
 public class BossBattle : MonoBehaviour
@@ -8,9 +9,17 @@ public class BossBattle : MonoBehaviour
     public enum Stage
     {
         WaitingToStart,
-        Stage_1,
-        Stage_2,
-        Stage_3,
+        Spawning,
+        Transition,
+        Stage_1, // normal attack
+        Transition1TO2, // 1 to 2 
+        Stage_2, // tornado protect
+        Transition2TO3, // 2 to 3
+        Stage_3, // left rock destoryed and start normal attack
+        Transition3TO4, // 3 to 4
+        Stage_4, // tornado protect
+        Transition4TO5, // 4 to 5
+        Stage_5, // right rock destoryed and start normal attack       
     }
 
     [SerializeField] private BattleSystem battleSystem;
@@ -18,12 +27,15 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private EnemySpawn pfEnemyCactusSpawn;
     [SerializeField] private GameObject boss;
     [SerializeField] private EnemyHealth enemyHealth;
+    [SerializeField] private WizardMain wizardMain;
     [SerializeField] private float enemySpawnRate;
     [SerializeField] private float maxEnemyAlive;
 
+
     private List<Vector3> spawnPositionList;
     private List<EnemySpawn> enemySpawnList;
-    private Stage stage;
+    public Stage stage;
+    public Stage lastStage;
 
     public event EventHandler bossBattleOver;
     
@@ -57,22 +69,44 @@ public class BossBattle : MonoBehaviour
     private void StartBattle()
     {
         Debug.Log("Boss battle started!");
-        StartNextStage();
-        boss.GetComponent<EnemySpawn>().Spawn();
+        StartNextStage();       
        
-        InvokeRepeating("SpawnEnemy", 0.5f, enemySpawnRate);
+        InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
     }
 
-    private void StartNextStage() {
+    public void StartNextStage() {
         switch (stage) {
             case Stage.WaitingToStart:
+                stage = Stage.Spawning;
+                wizardMain.Spawn();
+                break;
+            case Stage.Spawning:            // call next from wizardMain
                 stage = Stage.Stage_1;
                 break;
-            case Stage.Stage_1:
-                stage = Stage.Stage_2;
+            case Stage.Transition:
+                if(lastStage == Stage.Stage_1){
+                    stage = Stage.Stage_2;
+                }else if(lastStage == Stage.Stage_3){
+                    stage = Stage.Stage_4;
+                }else if(lastStage == Stage.Stage_4){
+                    stage = Stage.Stage_5;
+                }
                 break;
+            case Stage.Stage_1:             // call from bossBattle
+                lastStage = stage;
+                stage = Stage.Transition;
+                wizardMain.Stage2Start();
+                break;  
             case Stage.Stage_2:
                 stage = Stage.Stage_3;
+                break;
+            case Stage.Stage_3:             // call from bossBattle
+                lastStage = stage;
+                stage = Stage.Transition;
+                wizardMain.Stage4Start();
+                break;
+            case Stage.Stage_4:             
+                stage = Stage.Stage_5;
                 break;
         }
         Debug.Log("Starting next stage: " + stage);
@@ -84,11 +118,11 @@ public class BossBattle : MonoBehaviour
         switch(stage){
             case Stage.Stage_1:
                 if (enemyHealth.GetHealthNormalized() <= .7f){
-                    StartNextStage();
+                    StartNextStage();       // Start Transitioning 1 to 2
                 }
                 break;
-            case Stage.Stage_2:
-                if (enemyHealth.GetHealthNormalized() <= .3f){
+            case Stage.Stage_3:
+                if (enemyHealth.GetHealthNormalized() <= .4f){
                     StartNextStage();
                 }
                 break;    
@@ -103,6 +137,9 @@ public class BossBattle : MonoBehaviour
         Debug.Log("Boss battle over!");
         CancelInvoke();
         DestroyAllEnemies();
+        foreach(GameObject o in GameObject.FindGameObjectsWithTag("NeedToDestroy")){
+            Destroy(o);
+        }
         bossBattleOver?.Invoke(this, EventArgs.Empty);
     }
 
@@ -124,12 +161,15 @@ public class BossBattle : MonoBehaviour
         EnemySpawn pfEnemySpawn;
         int rand = UnityEngine.Random.Range(0, 100);
         pfEnemySpawn = pfEnemyCactusSpawn;                      // By default spawn enemy cactus
-        if (rand < 45) pfEnemySpawn = pfEnemyCapsuleSpawn;      // 45% chances of spawning enemy capsule
+        if (rand < 25) pfEnemySpawn = pfEnemyCapsuleSpawn;      // 25% chances of spawning enemy capsule
 
-        EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, spawnPosition, Quaternion.identity) as EnemySpawn;
-        enemySpawn.Spawn();
-        
-        enemySpawnList.Add(enemySpawn);
+        NavMeshHit closestHit;
+        if(NavMesh.SamplePosition(spawnPosition, out closestHit, 3f, NavMesh.AllAreas ) ){
+            EnemySpawn enemySpawn = Instantiate(pfEnemySpawn, closestHit.position, Quaternion.identity) as EnemySpawn;
+            enemySpawn.GetComponent<NavMeshAgent>().enabled = true;
+            enemySpawn.Spawn();
+            enemySpawnList.Add(enemySpawn);
+        }
     }
 
     private void DestroyAllEnemies()

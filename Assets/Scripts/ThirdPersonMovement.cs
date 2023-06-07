@@ -17,10 +17,13 @@ public class ThirdPersonMovement : MonoBehaviour
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
 
+    public bool allowToMove;
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        allowToMove = true;
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
 
-        if(direction.magnitude >= 0.1f)
+        if(direction.magnitude >= 0.1f && allowToMove)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angel = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotatoinSmoothVelocity, rotationSmoothTime);
@@ -46,10 +49,11 @@ public class ThirdPersonMovement : MonoBehaviour
         }else{
             animator.SetBool("isWalking", false);
         }
-        transform.rotation = cam.transform.rotation;                
+        transform.rotation = cam.transform.rotation;
+        // transform.rotation = Quaternion.Euler(0, cam.transform.rotation.y, cam.transform.rotation.z);                
         // transform.rotation = Quaternion.Euler(0, cam.transform.rotation.y, cam.transform.rotation.z);
 
-        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
+        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer && allowToMove)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 //            animator.SetBool("isShooting", true);
@@ -57,7 +61,7 @@ public class ThirdPersonMovement : MonoBehaviour
 //            animator.SetBool("isShooting", false);
         }
 
-        if(Input.GetButton("Fire1")){
+        if(Input.GetButton("Fire1") && allowToMove){
             animator.SetBool("isShooting", true);
         }else{
             animator.SetBool("isShooting", false);

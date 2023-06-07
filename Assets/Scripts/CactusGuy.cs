@@ -15,6 +15,11 @@ public class CactusGuy : MonoBehaviour
     public int maxShield = 100;
     public int currentShield;
 
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private ThirdPersonMovement thirdPersonMovement;
+    [SerializeField] private ThirdPersonShooterController thirdPersonShooterController;
+
+
     void Awake()
     {
         currentHealth = maxHealth;
@@ -22,18 +27,34 @@ public class CactusGuy : MonoBehaviour
 
         currentShield = maxShield;
         shieldbar.SetMaxShield(maxShield);
+
+        cameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
+        thirdPersonMovement = GetComponent<ThirdPersonMovement>();
+        thirdPersonShooterController = GetComponent<ThirdPersonShooterController>();
     }
 
     public void TakeDamage(int damage)
     {
         if(shieldbar.slider.value > 0){
-            currentShield -= damage;
-            shieldbar.SetSield(currentShield);
+            if(shieldbar.slider.value < damage){
+                int carryOver = (int)(damage - shieldbar.slider.value);
+                currentShield = 0;
+                shieldbar.SetSield(currentShield);
+                currentHealth -= carryOver;
+                healthbar.SetHealth(currentHealth);
+            }else{
+                currentShield -= damage;
+                shieldbar.SetSield(currentShield);
+            }
         }
         else
         {
             currentHealth -= damage;
             healthbar.SetHealth(currentHealth);
+        }
+        if (currentHealth <= 0)
+        {
+            // OnDeath();
         }
     }
 
@@ -49,36 +70,10 @@ public class CactusGuy : MonoBehaviour
         healthbar.SetHealth(currentHealth);
     }
 
-    // [SerializeField] private float _maxHealth = 3;
-    // [SerializeField] private GameObject _deathEffect, _hitEffect;
-    // private float _currentHealth;
-
-    // [SerializeField] private Healthbar _healthbar;
-    // // Start is called before the first frame update
-    // void Start()
-    // {
-    //     _currentHealth = _maxHealth;
-
-    //     _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
-    // }
-
-    // void OnMouseEnter() {
-    //     _currentHealth -= Random.Range(0.5f, 1.5f);
-
-    //     if(_currentHealth <= 0) {
-    //         //Instantiate(_deathEffect, transform.position, Quaternion.Euler(-90,0,0));
-    //         Destroy(gameObject);
-    //         RestartScene();
-    //     }
-    //     else{
-    //         _healthbar.UpdateHealthBar(_maxHealth, _currentHealth);
-    //         Instantiate(_hitEffect, transform.position, Quaternion.identity);
-    //     }
-    // }
-
-    // public void RestartScene()
-    //  {
-    //      Scene thisScene = SceneManager.GetActiveScene();
-    //      SceneManager.LoadScene(thisScene.name);
-    //  }
+   void OnDeath()
+    {
+        thirdPersonShooterController.readyToShoot = false;
+        thirdPersonMovement.allowToMove = false;
+        // cameraManager.EnableKillCam();
+    }
 }
