@@ -12,7 +12,7 @@ public class WizardMain : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private EnemyHealth enemyHealth;
-    [SerializeField] private BossBattle bossBattle;
+    [SerializeField] private WizardBossBattle wizardBossBattle;
     [SerializeField] private RockScript leftRock;
     [SerializeField] private RockScript rightRock;
 
@@ -102,7 +102,7 @@ public class WizardMain : MonoBehaviour
         leftRock.rockDestoryed += RockDestoryed;
         // rightRock.rockDestoryed += RockDestoryed;
 
-        bossBattle.StartNextStage(); // Start stage 2
+        wizardBossBattle.StartNextStage(); // Start stage 2
 
         yield return null;
     }
@@ -132,7 +132,7 @@ public class WizardMain : MonoBehaviour
         // leftRock.rockDestoryed += RockDestoryed;
         rightRock.rockDestoryed += RockDestoryed;
 
-        bossBattle.StartNextStage(); // Start stage 4
+        wizardBossBattle.StartNextStage(); // Start stage 4
 
         yield return null;
     }
@@ -156,7 +156,7 @@ public class WizardMain : MonoBehaviour
 
         enemyHealth.cantBeDamage = false;
         enemyHealth.healthbar.gameObject.SetActive(true);
-        bossBattle.StartNextStage();
+        wizardBossBattle.StartNextStage();
     }
 
     IEnumerator stage1StartPrologue()
@@ -183,7 +183,7 @@ public class WizardMain : MonoBehaviour
         // Start wizard action
         enemyHealth.healthbar.gameObject.SetActive(true);
         enemyHealth.cantBeDamage = false;
-        bossBattle.StartNextStage();    // Start stage 1
+        wizardBossBattle.StartNextStage();    // Start stage 1
 
         yield return null;
     }

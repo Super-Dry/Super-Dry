@@ -14,7 +14,8 @@ public class BattleSystem : MonoBehaviour
         BattleOver,
     }
 
-    [SerializeField] private BossBattle bossBattle;
+    // [SerializeField] private BossBattle bossBattle;
+    [SerializeField] private IBossBattle bossBattle;
     [SerializeField] private Wave[] waveArray;
 
     public event EventHandler onBattleOver;
@@ -25,7 +26,7 @@ public class BattleSystem : MonoBehaviour
     void Awake()
     {
         state = State.Idle;
-        bossBattle = GetComponentInChildren<BossBattle>();
+        bossBattle = GetComponentInChildren<IBossBattle>();
     }
 
     public void StartBattle()

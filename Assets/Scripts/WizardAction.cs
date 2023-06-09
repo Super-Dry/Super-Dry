@@ -31,7 +31,7 @@ public class WizardAction : MonoBehaviour
     public IAttack enemyAttack;
 
     public EnemyHealth enemyHealth;
-    public BossBattle bossBattle;
+    public WizardBossBattle wizardBossBattle;
 
     //Animation
     public event EventHandler onAttackAnimation;
@@ -60,12 +60,12 @@ public class WizardAction : MonoBehaviour
     void Update()
     {
         if(!enemyHealth.IsDead()){
-            if(bossBattle.stage == BossBattle.Stage.Spawning || bossBattle.stage == BossBattle.Stage.Transition){
+            if(wizardBossBattle.stage == WizardBossBattle.Stage.Spawning || wizardBossBattle.stage == WizardBossBattle.Stage.Transition){
                 transform.LookAt(playerTargerPointTransform);
                 onAttackAnimation?.Invoke(this, EventArgs.Empty);
-            }else if(bossBattle.stage == BossBattle.Stage.Stage_1 || bossBattle.stage == BossBattle.Stage.Stage_3  || bossBattle.stage == BossBattle.Stage.Stage_5){
+            }else if(wizardBossBattle.stage == WizardBossBattle.Stage.Stage_1 || wizardBossBattle.stage == WizardBossBattle.Stage.Stage_3  || wizardBossBattle.stage == WizardBossBattle.Stage.Stage_5){
                 AttackPlayer();
-            }else if(bossBattle.stage == BossBattle.Stage.Stage_2 || bossBattle.stage == BossBattle.Stage.Stage_4){
+            }else if(wizardBossBattle.stage == WizardBossBattle.Stage.Stage_2 || wizardBossBattle.stage == WizardBossBattle.Stage.Stage_4){
                 transform.LookAt(playerTargerPointTransform);
                 onAttackAnimation?.Invoke(this, EventArgs.Empty);
             }

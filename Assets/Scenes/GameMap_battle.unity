@@ -3863,7 +3863,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418294756}
-  m_LocalRotation: {x: 0.048522707, y: 0.15558623, z: -0.0076519996, w: 0.9866002}
+  m_LocalRotation: {x: 0.048522722, y: 0.15558624, z: -0.007652004, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8145,7 +8145,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948304457}
-  m_LocalRotation: {x: 0.048522722, y: 0.15558624, z: -0.007652004, w: 0.9866002}
+  m_LocalRotation: {x: 0.048522707, y: 0.15558623, z: -0.0076519996, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12431,7 +12431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f507cc3ba59e8d14494806d6f4739ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossBattle: {fileID: 0}
   waveArray:
   - enemySpawnArray:
     - {fileID: 1155745639}
@@ -16005,7 +16004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f507cc3ba59e8d14494806d6f4739ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossBattle: {fileID: 0}
   waveArray:
   - enemySpawnArray:
     - {fileID: 2128371295}
@@ -18268,7 +18266,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928508748}
-  m_LocalRotation: {x: 0.048522707, y: 0.15558623, z: -0.0076519996, w: 0.9866002}
+  m_LocalRotation: {x: 0.048522715, y: 0.15558624, z: -0.007652003, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26659,7 +26657,7 @@ MonoBehaviour:
   skinnedMeshRenderer: {fileID: 0}
   navMeshAgent: {fileID: 0}
   enemyHealth: {fileID: 0}
-  bossBattle: {fileID: 1978835264}
+  wizardBossBattle: {fileID: 1978835264}
   leftRock: {fileID: 508617830}
   rightRock: {fileID: 28982490}
 --- !u!114 &6429699825253550104
@@ -26678,7 +26676,7 @@ MonoBehaviour:
   playerTargerPointObj: {fileID: 692160217}
   playerTargerPoint: {fileID: 692160218}
   playerTrans: {fileID: 5234238465875125670}
-  bossBattle: {fileID: 1978835264}
+  wizardBossBattle: {fileID: 1978835264}
   tornadoSpeed: 60
   m_damage: 20
 --- !u!114 &6429699825253550105
@@ -26699,7 +26697,7 @@ MonoBehaviour:
   temp: {x: 0, y: 0, z: 0}
   timeBetweenAttacks: 4
   enemyHealth: {fileID: 0}
-  bossBattle: {fileID: 1978835264}
+  wizardBossBattle: {fileID: 1978835264}
 --- !u!114 &6429699825253550106
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-public class BossBattle : MonoBehaviour
+public class WizardBossBattle : MonoBehaviour, IBossBattle
 {
     public enum Stage
     {

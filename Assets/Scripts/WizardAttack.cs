@@ -11,7 +11,7 @@ public class WizardAttack : MonoBehaviour, IAttack
     [SerializeField] private GameObject playerTargerPointObj;
     [SerializeField] private Transform playerTargerPoint;
     [SerializeField] private Transform playerTrans;
-    [SerializeField] private BossBattle bossBattle;
+    [SerializeField] private WizardBossBattle wizardBossBattle;
     [SerializeField] private float tornadoSpeed;
     [SerializeField] private int m_damage;
     [SerializeField] public int damage
