@@ -18,12 +18,15 @@ public class ThirdPersonMovement : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public bool allowToMove;
+    GameObject shootingSound;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         allowToMove = true;
+        shootingSound = GameObject.Find("ShootingSound");
     }
 
     // Update is called once per frame
@@ -63,8 +66,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if(Input.GetButton("Fire1") && allowToMove){
             animator.SetBool("isShooting", true);
+            shootingSound.SetActive(true);
         }else{
             animator.SetBool("isShooting", false);
+            shootingSound.SetActive(false);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
