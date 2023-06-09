@@ -18,7 +18,9 @@ public class ThirdPersonMovement : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public bool allowToMove;
+
     GameObject shootingSound;
+    GameObject footstepSound;
 
 
     // Start is called before the first frame update
@@ -27,6 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         allowToMove = true;
         shootingSound = GameObject.Find("ShootingSound");
+        footstepSound = GameObject.Find("Footsteps");
     }
 
     // Update is called once per frame
@@ -49,8 +52,10 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
             animator.SetBool("isWalking", true);
+            footstepSound.SetActive(true);
         }else{
             animator.SetBool("isWalking", false);
+            footstepSound.SetActive(false);
         }
         transform.rotation = cam.transform.rotation;
         // transform.rotation = Quaternion.Euler(0, cam.transform.rotation.y, cam.transform.rotation.z);                
