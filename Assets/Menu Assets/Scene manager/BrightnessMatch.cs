@@ -2,66 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
-using static BrightnessControl;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 public class BrightnessMatch : MonoBehaviour
 {
-    public  Slider BrightnessSlider; 
-    public  PostProcessProfile brightness;
-    public  PostProcessLayer layer;
-    public AutoExposure exposure;
+    public static float brightnessValue;
+    public  Slider slider; 
+    public Volume postProcessingVolume;
+    private ColorAdjustments colorGrading;
+
     // Start is called before the first frame update
     void Start()
     {
-        if(BrightnessControl.brightness != null && BrightnessControl.layer != null & BrightnessControl.exposure != null)
+        postProcessingVolume = GetComponent<Volume>();
+        postProcessingVolume.profile.TryGet(out colorGrading);
+        if(slider != null)
         {
-            this.brightness = BrightnessControl.brightness;
-            layer = BrightnessControl.layer;
-            exposure = BrightnessControl.exposure;
-            Debug.Log("Variables passed!\n");
+            if(brightnessValue != default(float))
+            {
+                slider.value = brightnessValue + 2.5f;
+                colorGrading.postExposure.value = brightnessValue + 2.5f;
+            }
+            else
+            {
+                brightnessValue = 0;
+                slider.value = 2.5f;
+                colorGrading.postExposure.value = 0;
+            }
         }
-        Debug.Log(BrightnessControl.brightnessValue);
-        PostProcessVolume brightness = GetComponent<PostProcessVolume>();
-        if (brightness != null && brightness.sharedProfile != null)
-        {
-            brightness.sharedProfile.TryGetSettings(out exposure);
-        }
-        exposure.keyValue.value = 2.0f;
+        else{
+            if(brightnessValue != default(float))
+            {
+                colorGrading.postExposure.value = brightnessValue + 2.5f;
+            }
+            else
+            {
+                brightnessValue = 0;
+                colorGrading.postExposure.value = 0;
+            }
+        } 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(BrightnessControl.brightnessValue != default(float))
+        if(brightnessValue != default(float))
         {
-            if(BrightnessControl.brightnessValue != 0)
-            {
-                exposure.keyValue.value = BrightnessControl.brightnessValue;
-                BrightnessSlider.value = BrightnessControl.brightnessValue;
-            }
-            else
-            {
-                exposure.keyValue.value = 0.05f;
-                BrightnessSlider.value = 0.05f;
-            }
+            colorGrading.postExposure.value = brightnessValue;
         }
     }
 
     public void SetBrightness(float value)
     {
-        if(value != default(float) && pauseGame.isPaused)
+        if(value != default(float))
         {
-            BrightnessControl.brightnessValue = value;
-            if(value > 0.05f)
-            {
-                BrightnessControl.exposure.keyValue.value = value;
-                BrightnessControl.brightnessValue = value;
-            }
-            else
-            {
-                BrightnessControl.exposure.keyValue.value = 0.05f;
-                BrightnessControl.brightnessValue = 0.05f;
-            }
+            colorGrading.postExposure.value = value - 2.5f;
+            brightnessValue = value - 2.5f;
         }
     }
 }
