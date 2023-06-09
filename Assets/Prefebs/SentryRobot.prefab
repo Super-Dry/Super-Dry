@@ -1835,7 +1835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6822699628281352272}
   - component: {fileID: 598756638045473322}
-  - component: {fileID: 6423716728765435221}
+  - component: {fileID: 3885970523937994727}
   - component: {fileID: 6423716728765435183}
   - component: {fileID: 6423716728765435182}
   - component: {fileID: 6423716728765435216}
@@ -1887,22 +1887,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &6423716728765435221
-Rigidbody:
+--- !u!114 &3885970523937994727
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6189293362899978986}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62489c46ee581b542aae5231d99f9a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6423716728765435183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,7 +1916,7 @@ MonoBehaviour:
   shootPoint: {fileID: 0}
   playerTargerPointObj: {fileID: 0}
   playerTargerPoint: {fileID: 0}
-  bulletSpeed: 30
+  bulletSpeed: 40
   m_damage: 5
 --- !u!114 &6423716728765435182
 MonoBehaviour:
@@ -1952,11 +1948,12 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
-  pauseTime: 2
+  deathAnimationLength: 0.5
+  pauseTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 3
   temp: {x: 0, y: 0, z: 0}
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 3
   enemyHealth: {fileID: 6423716728765435182}
 --- !u!114 &6423716728765435219
 MonoBehaviour:
@@ -1970,9 +1967,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fac9e2b45029b54f82185e8d66521ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 12
-  angle: 85
-  attackRange: 7
+  radius: 50
+  angle: 360
+  attackRange: 10
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -1987,7 +1984,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6189293362899978986}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2
@@ -1999,7 +1996,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &6253418392058069237

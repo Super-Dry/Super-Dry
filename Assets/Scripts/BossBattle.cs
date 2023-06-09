@@ -12,13 +12,9 @@ public class BossBattle : MonoBehaviour
         Spawning,
         Transition,
         Stage_1, // normal attack
-        Transition1TO2, // 1 to 2 
         Stage_2, // tornado protect
-        Transition2TO3, // 2 to 3
         Stage_3, // left rock destoryed and start normal attack
-        Transition3TO4, // 3 to 4
         Stage_4, // tornado protect
-        Transition4TO5, // 4 to 5
         Stage_5, // right rock destoryed and start normal attack       
     }
 
