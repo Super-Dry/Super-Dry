@@ -12,6 +12,8 @@ public class Gate : MonoBehaviour
     private bool rotating;
     public Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator> ();
 
+    public AudioSource gatesOpeningSound;
+
     void Awake()
     {
         LeftHinge = GameObject.Find("LeftHinge").GetComponent<Transform>();
@@ -38,6 +40,7 @@ public class Gate : MonoBehaviour
 
     public IEnumerator Open()
     {
+        gatesOpeningSound.Play();
         if (rotating)
         {
             yield break;
