@@ -12,13 +12,9 @@ public class BossBattle : MonoBehaviour
         Spawning,
         Transition,
         Stage_1, // normal attack
-        Transition1TO2, // 1 to 2 
         Stage_2, // tornado protect
-        Transition2TO3, // 2 to 3
         Stage_3, // left rock destoryed and start normal attack
-        Transition3TO4, // 3 to 4
         Stage_4, // tornado protect
-        Transition4TO5, // 4 to 5
         Stage_5, // right rock destoryed and start normal attack       
     }
 
@@ -85,7 +81,7 @@ public class BossBattle : MonoBehaviour
                 break;
             case Stage.Transition:
                 if(lastStage == Stage.Stage_1){
-                    stage = Stage.Stage_2;
+                    stage = Stage.Stage_2;                    
                 }else if(lastStage == Stage.Stage_3){
                     stage = Stage.Stage_4;
                 }else if(lastStage == Stage.Stage_4){
@@ -99,6 +95,9 @@ public class BossBattle : MonoBehaviour
                 break;  
             case Stage.Stage_2:
                 stage = Stage.Stage_3;
+                maxEnemyAlive -= 2;
+                enemySpawnRate += 3;
+                InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
                 break;
             case Stage.Stage_3:             // call from bossBattle
                 lastStage = stage;
@@ -107,6 +106,10 @@ public class BossBattle : MonoBehaviour
                 break;
             case Stage.Stage_4:             
                 stage = Stage.Stage_5;
+                CancelInvoke();
+                maxEnemyAlive -= 2;
+                enemySpawnRate += 3;
+                InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
                 break;
         }
         Debug.Log("Starting next stage: " + stage);
@@ -119,11 +122,18 @@ public class BossBattle : MonoBehaviour
             case Stage.Stage_1:
                 if (enemyHealth.GetHealthNormalized() <= .7f){
                     StartNextStage();       // Start Transitioning 1 to 2
+                    CancelInvoke();
+                    maxEnemyAlive += 2;
+                    enemySpawnRate -= 3;
+                    InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
                 }
                 break;
             case Stage.Stage_3:
                 if (enemyHealth.GetHealthNormalized() <= .4f){
                     StartNextStage();
+                    maxEnemyAlive += 2;
+                    enemySpawnRate -= 3;
+                    InvokeRepeating("SpawnEnemy", 5f, enemySpawnRate);
                 }
                 break;    
         }

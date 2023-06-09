@@ -666,6 +666,7 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 256
+  deathAnimationLength: 0.5
   pauseTime: 1
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 3
