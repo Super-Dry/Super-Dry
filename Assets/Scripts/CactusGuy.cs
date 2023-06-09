@@ -18,7 +18,6 @@ public class CactusGuy : MonoBehaviour
     [SerializeField] private CameraManager cameraManager;
     [SerializeField] private ThirdPersonMovement thirdPersonMovement;
     [SerializeField] private ThirdPersonShooterController thirdPersonShooterController;
-    public AudioSource hurtSound;
 
 
     void Awake()
@@ -36,7 +35,6 @@ public class CactusGuy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        hurtSound.Play();
         if(shieldbar.slider.value > 0){
             if(shieldbar.slider.value < damage){
                 int carryOver = (int)(damage - shieldbar.slider.value);
