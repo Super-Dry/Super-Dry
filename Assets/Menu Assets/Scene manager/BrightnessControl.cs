@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing; 
-
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using static BrightnessMatch;
 public class BrightnessControl : MonoBehaviour
 {
     // private float brightnessValue = 1f;
-    public  Slider BrightnessSlider; 
-    public  static PostProcessProfile brightness;
-    public  static PostProcessLayer layer;
-
-    public static AutoExposure exposure;
-    public static float brightnessValue = 1;
+    public Volume postProcessingVolume;
+    private ColorAdjustments colorGrading;
+    public Slider slider;
+    
     void Start()
     {
-        
-        PostProcessVolume brightness = GetComponent<PostProcessVolume>();
-        if (brightness != null && brightness.sharedProfile != null && BrightnessSlider != null)
+        postProcessingVolume = GetComponent<Volume>();
+        postProcessingVolume.profile.TryGet(out colorGrading);
+        if(brightnessValue == default(float))
         {
-            brightness.sharedProfile.TryGetSettings(out exposure);
-            exposure.keyValue.value = brightnessValue;
-            BrightnessSlider.value = brightnessValue;
+            slider.value = 2.5f;
+            colorGrading.postExposure.value = 0;
         }
-       
+        else
+        {
+            slider.value = brightnessValue + 2.5f;    
+            colorGrading.postExposure.value = brightnessValue;
+        }       
     }
 
 
@@ -48,17 +50,8 @@ public class BrightnessControl : MonoBehaviour
     {
         if(value != default(float))
         {
-            brightnessValue = value;
-            if(value > 0.05f)
-            {
-                exposure.keyValue.value = value;
-                brightnessValue = value;
-            }
-            else
-            {
-                exposure.keyValue.value = 0.05f;
-                brightnessValue = 0.05f;
-            }
+            colorGrading.postExposure.value = value - 2.5f;
+            brightnessValue = value - 2.5f;
         }
     }
 }
