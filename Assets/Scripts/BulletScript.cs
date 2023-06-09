@@ -16,8 +16,6 @@ public class BulletScript : MonoBehaviour
             player.TakeDamage(parent.damage);
         }else if(collision.gameObject.tag == "Ground"){
             Destroy(gameObject);
-        }else{
-            Destroy(gameObject,5f);
         }
     }
 }
