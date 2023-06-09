@@ -24,6 +24,7 @@ public class EnemyAction : MonoBehaviour
     private Transform playerTargerPointTransform;
     public LayerMask Ground;
     private State state;
+    [SerializeField] float deathAnimationLength;
 
     //Look Around
     public float pauseTime;
@@ -89,9 +90,10 @@ public class EnemyAction : MonoBehaviour
                 onAttackAnimation?.Invoke(this, EventArgs.Empty);
                 break;
             case State.Dead:
+                enemyHealth.healthbar.gameObject.SetActive(false);
                 agent.SetDestination(transform.position);
                 onDeadAnimation?.Invoke(this, EventArgs.Empty);
-                Invoke(nameof(DestroyEnemy), 3f);
+                Invoke(nameof(DestroyEnemy), deathAnimationLength);
                 break;
             default:
                 state = State.Idle;
