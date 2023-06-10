@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+using static EndGame;
 public class pauseGame : MonoBehaviour
 {
     Canvas myCanvas;
@@ -12,7 +12,7 @@ public class pauseGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !endGame)
         {
             if(!isPaused)
             {
