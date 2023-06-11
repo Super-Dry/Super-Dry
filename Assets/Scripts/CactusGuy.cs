@@ -24,6 +24,7 @@ public class CactusGuy : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineBrain cinemachineBrain;
     [SerializeField] private GameObject shootingSound;
     [SerializeField] private GameObject footstepSound;
+    [SerializeField] private GameObject HUDCanvas;
 
 
     void Awake()
@@ -40,6 +41,7 @@ public class CactusGuy : MonoBehaviour
         endGame = GameObject.Find("EndGameCanvas").GetComponent<EndGame>();
         shootingSound = GameObject.Find("ShootingSound");
         footstepSound = GameObject.Find("Footsteps");
+        HUDCanvas = GameObject.Find("HUD Canvas");
     }
 
     public void TakeDamage(int damage)
@@ -82,6 +84,7 @@ public class CactusGuy : MonoBehaviour
 
    void OnDeath()
     {
+        HUDCanvas.SetActive(false);
         backgroundMusic.Stop();
         shootingSound.SetActive(false);
         footstepSound.SetActive(false);

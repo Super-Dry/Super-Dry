@@ -43,7 +43,6 @@ public class EndGame : MonoBehaviour
 
     public void Restart()
     {
-
         Debug.Log("Restart called!");
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;

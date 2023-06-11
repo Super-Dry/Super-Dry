@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.065423906, g: 0.023273014, b: 0.02734833, a: 1}
+  m_IndirectSpecularColor: {r: 0.0655938, g: 0.023332069, b: 0.027474413, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2693,7 +2693,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238576406}
-  m_LocalRotation: {x: -0.012912374, y: -0.014054462, z: 0.0012027551, w: 0.99981713}
+  m_LocalRotation: {x: -0.012905389, y: -0.03566269, z: 0.0030519497, w: 0.9992759}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4158,7 +4158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418294756}
-  m_LocalRotation: {x: 0.048289847, y: 0.18310478, z: -0.0090054115, w: 0.9818654}
+  m_LocalRotation: {x: 0.048522715, y: 0.15558623, z: -0.0076520015, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6953,7 +6953,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.6509804, g: 0.30588236, b: 0.22352941, a: 1}
+  m_Color: {r: 1, g: 0.7212394, b: 0.65471697, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -6993,7 +6993,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -9418,7 +9418,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948304457}
-  m_LocalRotation: {x: 0.04828984, y: 0.18310477, z: -0.009005408, w: 0.9818654}
+  m_LocalRotation: {x: 0.048522715, y: 0.15558623, z: -0.0076520015, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14201,7 +14201,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379389004}
-  m_LocalRotation: {x: 0.14038369, y: 0.3901033, z: -0.21360546, w: 0.88458157}
+  m_LocalRotation: {x: 0.14038372, y: 0.39010334, z: -0.21360548, w: 0.88458157}
   m_LocalPosition: {x: -2.3900795, y: 0.8015518, z: 9.661868}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16366,7 +16366,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545850538}
-  m_LocalRotation: {x: -0.012912374, y: -0.014054462, z: 0.0012027551, w: 0.99981713}
+  m_LocalRotation: {x: -0.012905389, y: -0.03566269, z: 0.0030519497, w: 0.9992759}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20674,7 +20674,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928508748}
-  m_LocalRotation: {x: 0.048289847, y: 0.18310478, z: -0.0090054115, w: 0.9818654}
+  m_LocalRotation: {x: 0.048522722, y: 0.15558624, z: -0.007652004, w: 0.9866002}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22662,7 +22662,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114284788}
-  m_LocalRotation: {x: -0.012912374, y: -0.014054462, z: 0.0012027551, w: 0.99981713}
+  m_LocalRotation: {x: -0.012905389, y: -0.03566269, z: 0.0030519497, w: 0.9992759}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24484,6 +24484,10 @@ PrefabInstance:
     - target: {fileID: 4868459546058547227, guid: f43f308c19f324f40aacc7b20439d430, type: 3}
       propertyPath: m_Name
       value: HUD Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868459546058547227, guid: f43f308c19f324f40aacc7b20439d430, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4868459546058547228, guid: f43f308c19f324f40aacc7b20439d430, type: 3}
       propertyPath: m_Pivot.x
