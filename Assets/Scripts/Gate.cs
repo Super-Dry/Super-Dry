@@ -6,13 +6,11 @@ public class Gate : MonoBehaviour
 {
     [SerializeField] private Transform LeftHinge;
     [SerializeField] private Transform RightHinge;
-    [SerializeField] private float duration; 
+    [SerializeField] private float duration;
     [SerializeField] private BoxCollider boxCollider;
 
     private bool rotating;
-    public Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator> ();
-
-    public AudioSource gatesOpeningSound;
+    public Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator>();
 
     void Awake()
     {
@@ -31,7 +29,7 @@ public class Gate : MonoBehaviour
     {
         while (true)
         {
-            while (coroutineQueue.Count >0)
+            while (coroutineQueue.Count > 0)
                 yield return StartCoroutine(coroutineQueue.Dequeue());
             boxCollider.enabled = false;
             yield return null;
@@ -40,7 +38,6 @@ public class Gate : MonoBehaviour
 
     public IEnumerator Open()
     {
-        gatesOpeningSound.Play();
         if (rotating)
         {
             yield break;
@@ -86,7 +83,7 @@ public class Gate : MonoBehaviour
             counter += Time.deltaTime;
             LeftHinge.transform.eulerAngles = Vector3.Lerp(LeftCurrentRot, LeftNewRot, counter / duration);
             RightHinge.transform.eulerAngles = Vector3.Lerp(RightCurrentRot, RightNewRot, counter / duration);
-            
+
             yield return null;
         }
         rotating = false;
