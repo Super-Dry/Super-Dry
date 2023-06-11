@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-using static EndGame;
+
 public class pauseGame : MonoBehaviour
 {
     Canvas myCanvas;
     public static bool isPaused = false;
+    [SerializeField] private ThirdPersonShooterController thirdPersonShooterController;
+
+    void Awake()
+    {
+        thirdPersonShooterController = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonShooterController>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !endGame)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(!isPaused)
             {
@@ -26,6 +32,7 @@ public class pauseGame : MonoBehaviour
     }
 
     void PauseGame(){
+        thirdPersonShooterController.readyToShoot = false;
         Time.timeScale = 0f; // Pause the game
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -44,7 +51,7 @@ public class pauseGame : MonoBehaviour
     }
     public void ResumeGame()
     {
-
+        thirdPersonShooterController.readyToShoot = true;
         Time.timeScale = 1f; // Unpause the game
         Cursor.lockState = CursorLockMode.Locked; //Lock the cursor back for the game
         Cursor.visible = false; // hide the cursor

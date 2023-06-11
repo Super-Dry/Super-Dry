@@ -18,7 +18,12 @@ public class CactusGuy : MonoBehaviour
     [SerializeField] private CameraManager cameraManager;
     [SerializeField] private ThirdPersonMovement thirdPersonMovement;
     [SerializeField] private ThirdPersonShooterController thirdPersonShooterController;
-    public AudioSource hurtSound;
+    [SerializeField] private EndGame endGame;
+    [SerializeField] private AudioSource hurtSound;
+    [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private Cinemachine.CinemachineBrain cinemachineBrain;
+    [SerializeField] private GameObject shootingSound;
+    [SerializeField] private GameObject footstepSound;
 
 
     void Awake()
@@ -32,6 +37,9 @@ public class CactusGuy : MonoBehaviour
         cameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
         thirdPersonMovement = GetComponent<ThirdPersonMovement>();
         thirdPersonShooterController = GetComponent<ThirdPersonShooterController>();
+        endGame = GameObject.Find("EndGameCanvas").GetComponent<EndGame>();
+        shootingSound = GameObject.Find("ShootingSound");
+        footstepSound = GameObject.Find("Footsteps");
     }
 
     public void TakeDamage(int damage)
@@ -56,7 +64,7 @@ public class CactusGuy : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
-            // OnDeath();
+            OnDeath();
         }
     }
 
@@ -74,8 +82,15 @@ public class CactusGuy : MonoBehaviour
 
    void OnDeath()
     {
+        backgroundMusic.Stop();
+        shootingSound.SetActive(false);
+        footstepSound.SetActive(false);
         thirdPersonShooterController.readyToShoot = false;
         thirdPersonMovement.allowToMove = false;
-        // cameraManager.EnableKillCam();
+        thirdPersonMovement.enabled = false;
+        gameObject.transform.rotation = (Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation);
+        cinemachineBrain.m_DefaultBlend.m_Time = 1f;
+        cameraManager.EnableKillCam();
+        endGame.GameEnded();
     }
 }

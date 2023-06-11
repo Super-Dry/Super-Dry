@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using static BattleSystem;
+
 public class EndGame : MonoBehaviour
 {
-    public static bool endGame = false;
     public GameObject health;
     private Slider slider;
     private Canvas page;
@@ -16,25 +16,21 @@ public class EndGame : MonoBehaviour
     {  
         slider = health.GetComponent<Slider>();
         page = GetComponent<Canvas>();
-        endGame = false;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         page.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GameEnded()
     {
-        if(slider.value <= 0 )//|| endBattle
-        {
-            GameEnded();
-            endGame = true;
-        }
+        Time.timeScale = 0.25f;
+        StartCoroutine(GameEndedRoutine());
     }
 
-    void GameEnded()
+    IEnumerator GameEndedRoutine()
     {
+        yield return new WaitForSeconds(1f);
         page.enabled = true;
         Time.timeScale = 0f;
         AudioSource audio;
@@ -42,17 +38,16 @@ public class EndGame : MonoBehaviour
         audio.enabled = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        yield return null;
     }
 
     public void Restart()
     {
 
         Debug.Log("Restart called!");
-        endGame = false;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-         endGame = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
